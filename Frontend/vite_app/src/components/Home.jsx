@@ -357,7 +357,6 @@ const Home = () => {
               <div className="resume-preview-content">
                 <embed
                   src="/src/Ridham Patel.pdf"
-                  src2="/src/Ridham.pdf"
                   type="application/pdf"
                   width="100%"
                   height="100%"
