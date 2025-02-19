@@ -1,22 +1,16 @@
-import React from 'react';
+"use client"
+
 import { useEffect } from "react"
-import { useInView } from "react-intersection-observer"
 import { motion, useAnimation } from "framer-motion"
 import { ExternalLink, Github, Figma } from "lucide-react"
 import "../styles/Projects.css"
 
 const Projects = () => {
   const controls = useAnimation()
-  const [ref, inView] = useInView({
-    triggerOnce: false,
-    threshold: 0.1,
-  })
 
   useEffect(() => {
-    if (inView) {
-      controls.start("visible")
-    }
-  }, [controls, inView])
+    controls.start("visible")
+  }, [controls])
 
   const projectCategories = [
     {
@@ -247,13 +241,7 @@ const Projects = () => {
       {projectCategories.map((category, categoryIndex) => (
         <div key={categoryIndex} className="project-category">
           <h3 className="category-title">{category.title}</h3>
-          <motion.div
-            className="projects-grid"
-            ref={ref}
-            variants={containerVariants}
-            initial="hidden"
-            animate={controls}
-          >
+          <motion.div className="projects-grid" variants={containerVariants} initial="hidden" animate={controls}>
             {category.projects.map((project, index) => (
               <motion.div
                 key={project.title}
