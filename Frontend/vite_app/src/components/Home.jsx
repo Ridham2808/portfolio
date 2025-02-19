@@ -2,9 +2,11 @@ import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Github, Linkedin, Mail, Code2, Database, Layout, Globe, Cpu, Server, BookOpen, Coffee, Rocket, FileDown } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 
 const Home = () => {
+  const navigate = useNavigate();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 300], [0, -50]);
 
@@ -164,12 +166,12 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
           >
-            <a href="contact" className="primary-button">
+            <button className="primary-button" onClick={() => navigate('/contact')}>
               Get in Touch
-            </a>
-            <a href="projects" className="secondary-button">
+            </button>
+            <button className="secondary-button" onClick={() => navigate('/projects')}>
               View Projects
-            </a>
+            </button>
           </motion.div>
 
           <motion.div
