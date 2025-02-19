@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Github, Linkedin, Mail, Code2, Database, Layout, Globe, Cpu, Server, BookOpen, Coffee, Rocket } from 'lucide-react';
+import { Github, Linkedin, Mail, Code2, Database, Layout, Globe, Cpu, Server, BookOpen, Coffee, Rocket, FileDown } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import '../styles/Home.css';
 
@@ -14,6 +14,11 @@ const Home = () => {
   });
 
   const [aboutRef, aboutInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const [resumeRef, resumeInView] = useInView({
     triggerOnce: true,
     threshold: 0.1
   });
@@ -323,6 +328,45 @@ const Home = () => {
           ))}
         </motion.div>
       </section>
+
+      <motion.section
+        className="resume-section"
+        ref={resumeRef}
+        initial={{ opacity: 0, y: 50 }}
+        animate={resumeInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="resume-container">
+          <motion.div
+            className="section-header"
+            initial={{ opacity: 0, y: 20 }}
+            animate={resumeInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <h2>My Resume</h2>
+            <div className="section-divider" />
+          </motion.div>
+
+          <motion.div
+            className="resume-content"
+            initial={{ opacity: 0, y: 30 }}
+            animate={resumeInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <div className="resume-preview">
+              <div className="resume-preview-content">
+                <embed
+                  src="/src/Ridham Patel.pdf"
+                  src2="/src/Ridham.pdf"
+                  type="application/pdf"
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
     </div>
   );
 };
