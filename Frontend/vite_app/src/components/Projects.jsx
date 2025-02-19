@@ -157,6 +157,7 @@ const Projects = () => {
           description: 'A static Netflix UI clone built using HTML and CSS, featuring a dark-themed design, movie categories, and a responsive layout for an immersive experience.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894829/arklxwmzmqtstwbflwxz.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/netflix',
+          preview: 'https://ridhamnet2.netlify.app/',
           technologies: ['HTML5', 'CSS3']
         },
         {
@@ -164,6 +165,7 @@ const Projects = () => {
           description: 'A static YouTube UI clone built using HTML and CSS, featuring a structured video layout, sidebar navigation, and hover effects for an engaging user experience.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894854/us2wifdyd3vwhgc00kjw.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/Youtube',
+          preview: 'https://ridhamyou.netlify.app/',
           technologies: ['HTML5', 'CSS3']
         },
         {
@@ -171,6 +173,7 @@ const Projects = () => {
           description: 'A static Ludo game UI built using HTML and CSS, showcasing a colorful board, player tokens, and a visually appealing design without gameplay functionality.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894715/j1k1zhkamjzu9itbkupi.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/ludo',
+          preview: 'https://ridhamludo.netlify.app/',
           technologies: ['HTML5', 'CSS3', 'Flexbox']
         },
         {
@@ -178,6 +181,7 @@ const Projects = () => {
           description: 'A static Chess game UI built using HTML and CSS, featuring a classic board design and piece layout for a visually accurate representation',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894652/a1sa17rdasr77a5ndo7j.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/Chess',
+          preview: 'https://ridhamchess.netlify.app/',
           technologies: ['HTML5', 'CSS3', 'Responsive Design']
         },
         {
@@ -185,6 +189,7 @@ const Projects = () => {
           description: 'A static Cricket scoreboard UI built using HTML and CSS, displaying team scores, overs, and player stats with a clean and structured design.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894668/ubzlezgvyyofpdntmre7.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/Cricket',
+          preview: 'https://ridhamleader.netlify.app/',
           technologies: ['HTML5', 'CSS3']
         },
         {
@@ -192,6 +197,7 @@ const Projects = () => {
           description: 'A functional calculator built using HTML, CSS, and JavaScript, supporting basic arithmetic operations with a simple and user-friendly interface.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894636/unwpoek85uyswuhh9axa.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/calculator',
+          preview: 'https://ridhamcalc.netlify.app/',
           technologies: ['HTML5', 'CSS3', 'Javascript']
         },
       ]
