@@ -328,44 +328,6 @@ const Home = () => {
           ))}
         </motion.div>
       </section>
-
-      <motion.section
-        className="resume-section"
-        ref={resumeRef}
-        initial={{ opacity: 0, y: 50 }}
-        animate={resumeInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="resume-container">
-          <motion.div
-            className="section-header"
-            initial={{ opacity: 0, y: 20 }}
-            animate={resumeInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h2>My Resume</h2>
-            <div className="section-divider" />
-          </motion.div>
-
-          <motion.div
-            className="resume-content"
-            initial={{ opacity: 0, y: 30 }}
-            animate={resumeInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <div className="resume-preview">
-              <div className="resume-preview-content">
-                <embed
-                  src="/src/Ridham Patel.pdf"
-                  type="application/pdf"
-                  width="100%"
-                  height="100%"
-                />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </motion.section>
     </div>
   );
 };

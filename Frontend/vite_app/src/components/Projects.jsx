@@ -42,7 +42,7 @@ const Projects = () => {
         },
         {
           title: 'Bamoka Industries clone',
-          description: 'A full-stack e-commerce platform with real-time inventory management',
+          description: 'A Bamoka Industries UI clone built in React, featuring a professional layout, product showcase, and responsive design for an optimized user experience.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739895450/tjsn0k7o7odxseqbsu7a.png',
           github: 'https://github.com/Ridham2808/Bamoka-Industries-React',
           preview: 'https://bamoka-industries-react.netlify.app/',
@@ -50,7 +50,7 @@ const Projects = () => {
         },
         {
           title: 'Spotify Clone',
-          description: 'A collaborative task management application with real-time updates',
+          description: 'A static Spotify UI clone built in React, featuring a modern dark-themed design, playlist sections, and a responsive music player layout.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739895496/yriynva7qupk6gnhfcmj.png',
           github: 'https://github.com/Ridham2808/Spotify-React',
           technologies: ['React', 'Node.js']
@@ -130,7 +130,7 @@ const Projects = () => {
       projects: [
         {
           title: 'Godesi Website',
-          description: 'A responsive personal portfolio website showcasing my skills and projects',
+          description: 'A static Godesi website clone built using HTML and CSS, featuring an auto-scrolling sidebar, hover effects, and a visually appealing traditional design.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894688/vsly8jnuoryzbxr0b21g.png',
           github: 'https://github.com/Ridham2808/godesi',
           preview: 'https://godesi.netlify.app/',
@@ -138,7 +138,7 @@ const Projects = () => {
         },
         {
           title: 'Hourly Hotels',
-          description: 'A visually appealing landing page for a local restaurant',
+          description: 'A static Hourly Hotels website clone built using HTML and CSS, featuring a clean layout, hotel listings, and a responsive design for a seamless browsing experience.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894704/zoy2wyoq8psfznqpeb0q.png',
           github: 'https://github.com/Ridham2808/hourly-hotels',
           preview: 'https://hourly-hotels.netlify.app',
@@ -146,7 +146,7 @@ const Projects = () => {
         },
         {
           title: 'Multiday Tours',
-          description: 'A customizable blog template for travel enthusiasts',
+          description: 'A static MultiDay Tours website clone built using HTML and CSS, featuring a structured tour listing, responsive layout, and an intuitive user interface for easy navigation.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894797/oc38qchdbcppgj2s1hbq.png',
           github: 'https://github.com/Ridham2808/multiday-tours',
           preview: 'https://multiday-tours.netlify.app/',
@@ -154,42 +154,42 @@ const Projects = () => {
         },
         {
           title: 'Netflix Clone',
-          description: 'A responsive personal portfolio website showcasing my skills and projects',
+          description: 'A static Netflix UI clone built using HTML and CSS, featuring a dark-themed design, movie categories, and a responsive layout for an immersive experience.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894829/arklxwmzmqtstwbflwxz.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/netflix',
           technologies: ['HTML5', 'CSS3']
         },
         {
           title: 'Youtube Clone',
-          description: 'A visually appealing landing page for a local restaurant',
+          description: 'A static YouTube UI clone built using HTML and CSS, featuring a structured video layout, sidebar navigation, and hover effects for an engaging user experience.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894854/us2wifdyd3vwhgc00kjw.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/Youtube',
           technologies: ['HTML5', 'CSS3']
         },
         {
           title: 'Ludo Game',
-          description: 'A customizable blog template for travel enthusiasts',
+          description: 'A static Ludo game UI built using HTML and CSS, showcasing a colorful board, player tokens, and a visually appealing design without gameplay functionality.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894715/j1k1zhkamjzu9itbkupi.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/ludo',
           technologies: ['HTML5', 'CSS3', 'Flexbox']
         },
         {
           title: 'Chess Game',
-          description: 'A responsive personal portfolio website showcasing my skills and projects',
+          description: 'A static Chess game UI built using HTML and CSS, featuring a classic board design and piece layout for a visually accurate representation',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894652/a1sa17rdasr77a5ndo7j.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/Chess',
           technologies: ['HTML5', 'CSS3', 'Responsive Design']
         },
         {
           title: 'Leaderboard',
-          description: 'A visually appealing landing page for a local restaurant',
+          description: 'A static Cricket scoreboard UI built using HTML and CSS, displaying team scores, overs, and player stats with a clean and structured design.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894668/ubzlezgvyyofpdntmre7.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/Cricket',
           technologies: ['HTML5', 'CSS3']
         },
         {
           title: 'Calculator',
-          description: 'A customizable blog template for travel enthusiasts',
+          description: 'A functional calculator built using HTML, CSS, and JavaScript, supporting basic arithmetic operations with a simple and user-friendly interface.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739894636/unwpoek85uyswuhh9axa.png',
           github: 'https://github.com/Ridham2808/Clone/tree/main/calculator',
           technologies: ['HTML5', 'CSS3', 'Javascript']
