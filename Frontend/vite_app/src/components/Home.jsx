@@ -1,46 +1,44 @@
-"use client"
-import { useState, useEffect } from "react";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Github, Linkedin, Mail, Code2, Database, Layout, Globe, Cpu, Server, BookOpen, Coffee, Rocket, FileDown } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 
-const useTypingEffect = (texts, typingSpeed = 150, deletingSpeed = 50, pauseDuration = 1000) => {
-  const [displayedText, setDisplayedText] = useState("")
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isTyping, setIsTyping] = useState(true)
+const useTypingEffect = (texts, typingSpeed = 150, deletingSpeed = 150, pauseDuration = 1000) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
 
   useEffect(() => {
-    let timeout
+    let timeout;
 
     if (isTyping) {
       if (displayedText.length < texts[currentIndex].length) {
         timeout = setTimeout(() => {
-          setDisplayedText(texts[currentIndex].slice(0, displayedText.length + 1))
-        }, typingSpeed)
+          setDisplayedText(texts[currentIndex].slice(0, displayedText.length + 1));
+        }, typingSpeed);
       } else {
         timeout = setTimeout(() => {
-          setIsTyping(false)
-        }, pauseDuration)
+          setIsTyping(false);
+        }, pauseDuration);
       }
     } else {
       if (displayedText.length > 0) {
         timeout = setTimeout(() => {
-          setDisplayedText(displayedText.slice(0, -1))
-        }, deletingSpeed)
+          setDisplayedText(displayedText.slice(0, -1));
+        }, deletingSpeed);
       } else {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length)
-        setIsTyping(true)
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
+        setIsTyping(true);
       }
     }
 
-    return () => clearTimeout(timeout)
-  }, [displayedText, currentIndex, isTyping, texts, typingSpeed, deletingSpeed, pauseDuration])
+    return () => clearTimeout(timeout);
+  }, [displayedText, currentIndex, isTyping, texts, typingSpeed, deletingSpeed, pauseDuration]);
 
-  return displayedText
-}
+  return displayedText;
+};
 
 const Home = () => {
   const navigate = useNavigate();
@@ -62,8 +60,8 @@ const Home = () => {
     threshold: 0.1
   });
 
-  const texts = ["Full Stack Developer", "Web Developer", "UI/UX Designer"]
-  const displayedText = useTypingEffect(texts)
+  const texts = ["Full Stack Developer", "Web Developer", "UI/UX Designer"];
+  const displayedText = useTypingEffect(texts);
 
   const skills = [
     {
@@ -323,6 +321,56 @@ const Home = () => {
                   </motion.div>
                 ))}
               </motion.div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      <motion.section 
+        className="resume-section"
+        ref={resumeRef}
+        initial={{ opacity: 0, y: 50 }}
+        animate={resumeInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="resume-container">
+          <motion.div
+            className="section-header"
+            initial={{ opacity: 0, y: 20 }}
+            animate={resumeInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            <h2>Resume</h2>
+            <p>View my professional experience and qualifications</p>
+          </motion.div>
+
+          <div className="resume-content-wrapper">
+            <div className="resume-preview-container">
+              <iframe
+                src="https://drive.google.com/file/d/1JoATE4tuEbd1hfz-ej8OG2IM-J8_SLU-/preview"
+                className="resume-preview-frame"
+                title="Resume Preview"
+              />
+            </div>
+            <div className="resume-info">
+              <div className="resume-text">
+                <h3>Professional Resume</h3>
+                <p>
+                  Take a look at my detailed professional background, skills, and achievements.
+                  Download my resume to learn more about my experience and qualifications.
+                </p>
+              </div>
+              <motion.a
+                href="https://drive.google.com/file/d/1JoATE4tuEbd1hfz-ej8OG2IM-J8_SLU-/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="resume-download-button"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <FileDown className="download-icon" />
+                Download Resume
+              </motion.a>
             </div>
           </div>
         </div>
