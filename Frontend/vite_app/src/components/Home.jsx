@@ -1,9 +1,46 @@
+"use client"
+import { useState, useEffect } from "react";
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Github, Linkedin, Mail, Code2, Database, Layout, Globe, Cpu, Server, BookOpen, Coffee, Rocket, FileDown } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
+
+const useTypingEffect = (texts, typingSpeed = 150, deletingSpeed = 50, pauseDuration = 1000) => {
+  const [displayedText, setDisplayedText] = useState("")
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isTyping, setIsTyping] = useState(true)
+
+  useEffect(() => {
+    let timeout
+
+    if (isTyping) {
+      if (displayedText.length < texts[currentIndex].length) {
+        timeout = setTimeout(() => {
+          setDisplayedText(texts[currentIndex].slice(0, displayedText.length + 1))
+        }, typingSpeed)
+      } else {
+        timeout = setTimeout(() => {
+          setIsTyping(false)
+        }, pauseDuration)
+      }
+    } else {
+      if (displayedText.length > 0) {
+        timeout = setTimeout(() => {
+          setDisplayedText(displayedText.slice(0, -1))
+        }, deletingSpeed)
+      } else {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length)
+        setIsTyping(true)
+      }
+    }
+
+    return () => clearTimeout(timeout)
+  }, [displayedText, currentIndex, isTyping, texts, typingSpeed, deletingSpeed, pauseDuration])
+
+  return displayedText
+}
 
 const Home = () => {
   const navigate = useNavigate();
@@ -24,6 +61,9 @@ const Home = () => {
     triggerOnce: true,
     threshold: 0.1
   });
+
+  const texts = ["Full Stack Developer", "Web Developer", "UI/UX Designer"]
+  const displayedText = useTypingEffect(texts)
 
   const skills = [
     {
@@ -106,10 +146,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <motion.section
-        className="hero"
-        style={{ y }}
-      >
+      <motion.section className="hero" style={{ y }}>
         <div className="hero-background">
           <div className="hero-gradient"></div>
           <div className="hero-shapes">
@@ -120,7 +157,7 @@ const Home = () => {
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 4}s`
+                  animationDelay: `${Math.random() * 4}s`,
                 }}
               />
             ))}
@@ -146,7 +183,8 @@ const Home = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
             >
-              Full Stack Developer
+              {displayedText}
+              <span className="cursor">|</span>
             </motion.span>
           </motion.h1>
 
@@ -156,8 +194,8 @@ const Home = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            Crafting beautiful and functional web experiences with modern technologies.
-            Turning ideas into reality through clean and efficient code.
+            Crafting beautiful and functional web experiences with modern technologies. Turning ideas into reality
+            through clean and efficient code.
           </motion.p>
 
           <motion.div
@@ -166,10 +204,10 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
           >
-            <button className="primary-button" onClick={() => navigate('/contact')}>
+            <button className="primary-button" onClick={() => navigate("/contact")}>
               Get in Touch
             </button>
-            <button className="secondary-button" onClick={() => navigate('/projects')}>
+            <button className="secondary-button" onClick={() => navigate("/projects")}>
               View Projects
             </button>
           </motion.div>
