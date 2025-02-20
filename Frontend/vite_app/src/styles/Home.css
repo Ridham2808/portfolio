@@ -148,8 +148,7 @@
 }
 
 @keyframes float {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0) rotate(0deg);
   }
   50% {
@@ -194,32 +193,66 @@
 .about-content-wrapper {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  gap: 6rem;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-image-container {
+  width: 100%;
+  max-width: 480px;
+}
+
+.about-description {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-text-content {
+  margin-bottom: 2rem;
+}
+
+.intro-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.secondary-text {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+
+.about-cards-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
   align-items: center;
 }
 
-/* Image Styles */
 .about-image-container {
-  position: relative;
+  width: 100%;
   max-width: 480px;
-  margin: 0 auto;
+  margin-bottom: 2rem;
 }
 
 .image-wrapper {
   position: relative;
   border-radius: 1.5rem;
   overflow: hidden;
-  transform: rotate(-3deg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .profile-image {
   width: 100%;
   height: auto;
+  display: block;
   border-radius: 1.5rem;
   position: relative;
   z-index: 2;
-  filter: grayscale(20%) contrast(110%);
-  transition: all 0.4s ease;
 }
 
 .image-overlay {
@@ -245,31 +278,18 @@
   opacity: 0.3;
 }
 
-/* Text Content */
-.about-text-content {
-  display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
-}
-
-.intro-text {
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--text-primary) !important;
-  line-height: 1.8;
-}
-
-.about-description p {
-  font-size: 1.1rem;
-  line-height: 1.9;
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-}
-
-/* Experience Grid */
 .experience-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
 
@@ -279,6 +299,7 @@
   border-radius: 1.25rem;
   border: 1px solid var(--border-color);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
 }
 
 .experience-card:hover {
@@ -288,43 +309,28 @@
 }
 
 .experience-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   border-radius: 14px;
-  margin-bottom: 1.75rem;
+  margin: 0 auto 1.75rem;
+  color: white;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .about-content-wrapper {
-    grid-template-columns: 1fr;
-    gap: 4rem;
-  }
-  
-  .about-image-container {
-    max-width: 400px;
-  }
+.experience-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
 }
 
-@media (max-width: 768px) {
-  .about-me {
-    padding: 8rem 1.5rem;
-  }
-  
-  .about-header h2 {
-    font-size: 2.25rem;
-  }
-  
-  .experience-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .image-wrapper {
-    transform: none;
-  }
-  
-  .profile-image {
-    transform: none;
-  }
+.experience-card p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 .skills {
@@ -422,15 +428,10 @@
   line-height: 1.6;
 }
 
+/* Responsive Styles */
 @media (max-width: 1024px) {
-  .about-content-wrapper {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-  .about-image {
-    max-width: 400px;
-    margin: 0 auto;
+  .experience-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .hero-title {
@@ -447,17 +448,36 @@
     padding: 6rem 1rem;
   }
 
+  .about-header h2 {
+    font-size: 2.25rem;
+  }
+
   .experience-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
   }
 
-  .about-header h2 {
-    font-size: 2rem;
+  .about-text-content {
+    max-width: 100%;
   }
 
-  .about-description p {
-    font-size: 1rem;
+  .about-right-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .intro-text {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  
+  .secondary-text {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: var(--text-secondary);
   }
 
   .hero-buttons {

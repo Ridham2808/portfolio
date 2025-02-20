@@ -250,9 +250,9 @@ const Home = () => {
               </div>
             </motion.div>
 
-            <div className="about-text-content">
+            <div className="about-right-content">
               <motion.div
-                className="about-description"
+                className="about-text-content"
                 initial={{ opacity: 0, y: 30 }}
                 animate={aboutInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.4 }}
@@ -260,7 +260,7 @@ const Home = () => {
                 <p className="intro-text">
                   I'm a passionate full stack developer with a strong foundation in computer science and a keen eye for creating seamless, user-centric web applications.
                 </p>
-                <p>
+                <p className="secondary-text">
                   My journey in tech began at Rai University, where I honed my skills in various programming languages and software development methodologies.
                 </p>
               </motion.div>
