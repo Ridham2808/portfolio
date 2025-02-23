@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Github, Linkedin, Mail, Code2, Database, Layout, Globe, Cpu, Server, BookOpen, Coffee, Rocket, FileDown } from 'lucide-react';
+import { Github, Linkedin, Mail, Code2, Database, Layout, Globe, Cpu, Server, BookOpen, Coffee, Rocket, FileDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
@@ -41,9 +41,42 @@ const useTypingEffect = (texts, typingSpeed = 150, deletingSpeed = 150, pauseDur
 };
 
 const Home = () => {
+  const [currentResume, setCurrentResume] = useState(0);
   const navigate = useNavigate();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 300], [0, -50]);
+
+  const resumes = [
+    {
+      id: 0,
+      src: "https://drive.google.com/file/d/1JoATE4tuEbd1hfz-ej8OG2IM-J8_SLU-/preview",
+      downloadLink: "https://drive.google.com/file/d/1JoATE4tuEbd1hfz-ej8OG2IM-J8_SLU-/view?usp=sharing",
+      title: "Professional Resume",
+      description: "Take a look at my detailed professional background, skills, and achievements. Download my resume to learn more about my experience and qualifications."
+    },
+    {
+      id: 1,
+      src: "https://drive.google.com/file/d/1TVxPyIaDYcoEx7JKubw55pQF_k8AfcOa/preview",
+      downloadLink: "https://drive.google.com/file/d/1TVxPyIaDYcoEx7JKubw55pQF_k8AfcOa/view?usp=sharing",
+      title: "Minimalist Resume",
+      description: "A clean and simple resume highlighting my skills, experience, and projects in a professional format. Download to explore my qualifications in a concise and ATS-friendly layout."
+    },
+    {
+      id: 2,
+      src: "https://drive.google.com/file/d/1nVgprcCwnf_pJmeUo7pBmaaNj-ftUIIh/preview",
+      downloadLink: "https://drive.google.com/file/d/1nVgprcCwnf_pJmeUo7pBmaaNj-ftUIIh/view?usp=sharing",
+      title: "UI/UX Designer Resume",
+      description: "Explore my journey as a UI/UX designer, showcasing my skills, design principles, and user-centered approach. Download my resume to see my experience in crafting intuitive and engaging digital experiences."
+    }
+  ];
+
+  const nextResume = () => {
+    setCurrentResume((prev) => (prev + 1) % resumes.length);
+  };
+
+  const prevResume = () => {
+    setCurrentResume((prev) => (prev - 1 + resumes.length) % resumes.length);
+  };
 
   const [skillsRef, skillsInView] = useInView({
     triggerOnce: true,
@@ -326,7 +359,7 @@ const Home = () => {
         </div>
       </motion.section>
 
-      <motion.section 
+      <motion.section
         className="resume-section"
         ref={resumeRef}
         initial={{ opacity: 0, y: 50 }}
@@ -347,21 +380,37 @@ const Home = () => {
           <div className="resume-content-wrapper">
             <div className="resume-preview-container">
               <iframe
-                src="https://drive.google.com/file/d/1JoATE4tuEbd1hfz-ej8OG2IM-J8_SLU-/preview"
+                src={resumes[currentResume].src}
                 className="resume-preview-frame"
                 title="Resume Preview"
               />
+              <div className="resume-pagination">
+                <button
+                  onClick={prevResume}
+                  className="pagination-button"
+                  disabled={currentResume === 0}
+                >
+                  <ChevronLeft className="pagination-icon" />
+                </button>
+                <span className="pagination-text">
+                  {currentResume + 1} / {resumes.length}
+                </span>
+                <button
+                  onClick={nextResume}
+                  className="pagination-button"
+                  disabled={currentResume === resumes.length - 1}
+                >
+                  <ChevronRight className="pagination-icon" />
+                </button>
+              </div>
             </div>
             <div className="resume-info">
               <div className="resume-text">
-                <h3>Professional Resume</h3>
-                <p>
-                  Take a look at my detailed professional background, skills, and achievements.
-                  Download my resume to learn more about my experience and qualifications.
-                </p>
+                <h3>{resumes[currentResume].title}</h3>
+                <p>{resumes[currentResume].description}</p>
               </div>
               <motion.a
-                href="https://drive.google.com/file/d/1JoATE4tuEbd1hfz-ej8OG2IM-J8_SLU-/view?usp=sharing"
+                href={resumes[currentResume].downloadLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="resume-download-button"
