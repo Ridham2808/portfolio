@@ -106,7 +106,7 @@ const Home = () => {
     {
       icon: <Server size={28} />,
       name: 'Backend Development',
-      description: 'Creating server-side applications with Node.js and Express.js',
+      description: 'Creating server-side applications with Node.js',
       color: '#8b5cf6'
     },
     {
@@ -124,7 +124,7 @@ const Home = () => {
     {
       icon: <Code2 size={28} />,
       name: 'Programming',
-      description: 'Programming with C language and modern JavaScript',
+      description: 'Programming with C language',
       color: '#14b8a6'
     },
     {
