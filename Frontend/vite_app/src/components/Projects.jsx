@@ -68,6 +68,13 @@ const Projects = () => {
           technologies: ['Figma', 'Prototyping', 'UI/UX']
         },
         {
+          title: 'DocuMorph',
+          description: 'DocuMorph is a platform for document scanning and comparison with a user-friendly interface. It highlights similarities, supports bulk processing, and ensures secure handling. Additional pages include About Us, Blog, Contact, Privacy Policy, Enterprise, and Careers.',
+          image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1741255758/Screenshot_2025-03-06_153758_tcuw5i.png',
+          figma: 'https://www.figma.com/design/dDZOorjYWbhPg7yKGxtpic/DocuMorph?node-id=0-1&t=4SU0E1UIqlYAnzTS-1',
+          technologies: ['Figma', 'Prototyping', 'UI/UX']
+        },
+        {
           title: 'Codinggita',
           description: ' A website with fully animated pages like Home, Bootcamp, Contact Us, About Us, Privacy Policy, and Refund Policy, featuring scrollable overlays and hover effects.',
           image: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1739888440/flnic7pnzmg1ofiizuml.png',
