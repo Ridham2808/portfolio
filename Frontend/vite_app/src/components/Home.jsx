@@ -49,25 +49,25 @@ const Home = () => {
   const resumes = [
     {
       id: 0,
-      src: "https://drive.google.com/file/d/1JoATE4tuEbd1hfz-ej8OG2IM-J8_SLU-/preview",
-      downloadLink: "https://drive.google.com/file/d/1JoATE4tuEbd1hfz-ej8OG2IM-J8_SLU-/view?usp=sharing",
+      src: "https://drive.google.com/file/d/1icPTcUc8PCwqqnSlkzpIdgnNjP8s8xg3/preview",
+      downloadLink: "https://drive.google.com/file/d/1icPTcUc8PCwqqnSlkzpIdgnNjP8s8xg3/view?usp=sharing",
       title: "Professional Resume",
       description: "Take a look at my detailed professional background, skills, and achievements. Download my resume to learn more about my experience and qualifications."
     },
     {
       id: 1,
-      src: "https://drive.google.com/file/d/1TVxPyIaDYcoEx7JKubw55pQF_k8AfcOa/preview",
-      downloadLink: "https://drive.google.com/file/d/1TVxPyIaDYcoEx7JKubw55pQF_k8AfcOa/view?usp=sharing",
+      src: "https://drive.google.com/file/d/1XT-NZiARScYSXe-XrYqz93O04jAnl2eR/preview",
+      downloadLink: "https://drive.google.com/file/d/1XT-NZiARScYSXe-XrYqz93O04jAnl2eR/view?usp=sharing",
       title: "Minimalist Resume",
       description: "A clean and simple resume highlighting my skills, experience, and projects in a professional format. Download to explore my qualifications in a concise and ATS-friendly layout."
     },
     {
       id: 2,
-      src: "https://drive.google.com/file/d/1nVgprcCwnf_pJmeUo7pBmaaNj-ftUIIh/preview",
-      downloadLink: "https://drive.google.com/file/d/1nVgprcCwnf_pJmeUo7pBmaaNj-ftUIIh/view?usp=sharing",
+      src: "https://drive.google.com/file/d/1PmX0-fpsk2cr5XOsxXq7MRYo63IpNhue/preview",
+      downloadLink: "https://drive.google.com/file/d/1PmX0-fpsk2cr5XOsxXq7MRYo63IpNhue/view?usp=sharing",
       title: "UI/UX Designer Resume",
       description: "Explore my journey as a UI/UX designer, showcasing my skills, design principles, and user-centered approach. Download my resume to see my experience in crafting intuitive and engaging digital experiences."
-    }
+    }    
   ];
 
   const nextResume = () => {
