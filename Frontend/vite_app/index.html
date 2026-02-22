@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ridham Patel — Portfolio Updated</title>
   <meta name="description" content="Ridham Patel's portfolio has moved to a new, improved version." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap"
+    rel="stylesheet" />
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
       --green: #8BAE66;
@@ -17,7 +26,8 @@
       --bg: #1B211A;
     }
 
-    html, body {
+    html,
+    body {
       min-height: 100vh;
       background: var(--bg);
       color: var(--cream);
@@ -33,18 +43,42 @@
       pointer-events: none;
       animation: drift 8s ease-in-out infinite alternate;
     }
-    .bg-orb-1 { width: 500px; height: 500px; top: -100px; right: -100px; background: rgba(139,174,102,0.07); animation-delay: 0s; }
-    .bg-orb-2 { width: 400px; height: 400px; bottom: -80px; left: -80px; background: rgba(139,174,102,0.05); animation-delay: 3s; }
+
+    .bg-orb-1 {
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      right: -100px;
+      background: rgba(139, 174, 102, 0.07);
+      animation-delay: 0s;
+    }
+
+    .bg-orb-2 {
+      width: 400px;
+      height: 400px;
+      bottom: -80px;
+      left: -80px;
+      background: rgba(139, 174, 102, 0.05);
+      animation-delay: 3s;
+    }
+
     @keyframes drift {
-      from { transform: translate(0, 0) scale(1); }
-      to   { transform: translate(30px, 20px) scale(1.08); }
+      from {
+        transform: translate(0, 0) scale(1);
+      }
+
+      to {
+        transform: translate(30px, 20px) scale(1.08);
+      }
     }
 
     /* ── Grid overlay ── */
     .bg-grid {
-      position: fixed; inset: 0; pointer-events: none;
-      background-image: linear-gradient(rgba(235,213,171,1) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(235,213,171,1) 1px, transparent 1px);
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(235, 213, 171, 1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(235, 213, 171, 1) 1px, transparent 1px);
       background-size: 48px 48px;
       opacity: 0.018;
     }
@@ -52,153 +86,249 @@
     /* ── Layout ── */
     .page {
       min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 24px;
-      position: relative; z-index: 10;
+      position: relative;
+      z-index: 10;
     }
 
     .card {
-      max-width: 620px; width: 100%;
-      background: rgba(235,213,171,0.025);
-      border: 1px solid rgba(235,213,171,0.09);
+      max-width: 620px;
+      width: 100%;
+      background: rgba(235, 213, 171, 0.025);
+      border: 1px solid rgba(235, 213, 171, 0.09);
       border-radius: 40px;
       padding: 60px 52px;
       backdrop-filter: blur(24px);
       position: relative;
       overflow: hidden;
       animation: fadeUp 0.8s ease forwards;
-      opacity: 0; transform: translateY(32px);
+      opacity: 0;
+      transform: translateY(32px);
     }
+
     @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Top accent line */
     .card::before {
       content: '';
-      position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
       background: linear-gradient(90deg, transparent, var(--green), transparent);
     }
 
     /* ── Eyebrow ── */
     .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 10px; font-weight: 800; letter-spacing: 0.4em;
-      text-transform: uppercase; color: var(--green);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--green);
       margin-bottom: 28px;
     }
+
     .eyebrow-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--green); box-shadow: 0 0 10px var(--green);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
       animation: blink 1.8s ease-in-out infinite;
     }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.25
+      }
+    }
 
     /* ── Avatar ── */
     .avatar-wrap {
-      width: 88px; height: 88px;
+      width: 88px;
+      height: 88px;
       border-radius: 50%;
-      border: 2px solid rgba(139,174,102,0.35);
+      border: 2px solid rgba(139, 174, 102, 0.35);
       overflow: hidden;
       margin-bottom: 28px;
-      box-shadow: 0 0 40px rgba(139,174,102,0.18);
+      box-shadow: 0 0 40px rgba(139, 174, 102, 0.18);
     }
-    .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+    .avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
 
     /* ── Heading ── */
     h1 {
       font-size: clamp(28px, 5vw, 44px);
-      font-weight: 900; letter-spacing: -0.03em;
-      color: var(--cream); line-height: 1.1; margin-bottom: 18px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 18px;
     }
+
     h1 em {
       font-family: 'Playfair Display', Georgia, serif;
-      font-style: italic; color: var(--green);
+      font-style: italic;
+      color: var(--green);
     }
 
     /* ── Body text ── */
     .body-text {
-      font-size: 15px; font-weight: 300;
-      color: rgba(235,213,171,0.52);
-      line-height: 1.8; margin-bottom: 40px;
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(235, 213, 171, 0.52);
+      line-height: 1.8;
+      margin-bottom: 40px;
       max-width: 480px;
     }
 
     /* ── Divider ── */
     .divider {
-      height: 1px; width: 100%;
-      background: rgba(235,213,171,0.06);
+      height: 1px;
+      width: 100%;
+      background: rgba(235, 213, 171, 0.06);
       margin-bottom: 36px;
     }
 
     /* ── Countdown ── */
     .countdown-row {
-      display: flex; align-items: center; gap: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
       margin-bottom: 32px;
     }
+
     .countdown-badge {
-      font-size: 28px; font-weight: 900;
-      color: var(--green); font-variant-numeric: tabular-nums;
-      min-width: 44px; line-height: 1;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green);
+      font-variant-numeric: tabular-nums;
+      min-width: 44px;
+      line-height: 1;
     }
+
     .countdown-label {
-      font-size: 12px; font-weight: 600;
-      color: rgba(235,213,171,0.38); letter-spacing: 0.08em;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(235, 213, 171, 0.38);
+      letter-spacing: 0.08em;
     }
 
     /* Progress bar */
     .progress-track {
-      height: 2px; flex: 1;
-      background: rgba(235,213,171,0.07);
-      border-radius: 100px; overflow: hidden;
+      height: 2px;
+      flex: 1;
+      background: rgba(235, 213, 171, 0.07);
+      border-radius: 100px;
+      overflow: hidden;
     }
+
     .progress-fill {
-      height: 100%; width: 100%;
-      background: linear-gradient(90deg, var(--green), rgba(139,174,102,0.4));
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, var(--green), rgba(139, 174, 102, 0.4));
       border-radius: 100px;
       transform-origin: left;
       animation: shrink 10s linear forwards;
     }
-    @keyframes shrink { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+    @keyframes shrink {
+      from {
+        transform: scaleX(1);
+      }
+
+      to {
+        transform: scaleX(0);
+      }
+    }
 
     /* ── CTA Button ── */
     .cta-btn {
-      display: inline-flex; align-items: center; gap: 12px;
-      padding: 18px 36px; border-radius: 100px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 36px;
+      border-radius: 100px;
       background: var(--green);
       color: #1B211A;
-      font-size: 13px; font-weight: 800;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      text-decoration: none; border: none; cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
       transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
-      box-shadow: 0 8px 32px rgba(139,174,102,0.3);
-      position: relative; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(139, 174, 102, 0.3);
+      position: relative;
+      overflow: hidden;
     }
+
     .cta-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 16px 48px rgba(139,174,102,0.45);
+      box-shadow: 0 16px 48px rgba(139, 174, 102, 0.45);
       background: #9DC270;
     }
-    .cta-btn:active { transform: translateY(0) scale(0.97); }
+
+    .cta-btn:active {
+      transform: translateY(0) scale(0.97);
+    }
+
     .cta-arrow {
       transition: transform 0.25s;
     }
-    .cta-btn:hover .cta-arrow { transform: translateX(4px); }
+
+    .cta-btn:hover .cta-arrow {
+      transform: translateX(4px);
+    }
 
     /* ── Footer note ── */
     .footer-note {
       margin-top: 36px;
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(235,213,171,0.18); text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(235, 213, 171, 0.18);
+      text-align: center;
     }
 
     @media (max-width: 520px) {
-      .card { padding: 40px 28px; border-radius: 28px; }
-      h1 { font-size: 26px; }
+      .card {
+        padding: 40px 28px;
+        border-radius: 28px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Ambient background -->
@@ -217,10 +347,8 @@
 
       <!-- Avatar -->
       <div class="avatar-wrap">
-        <img
-          src="https://res.cloudinary.com/dlqyrgblr/image/upload/v1739861780/a1npzwhwwxzunehdq50y.png"
-          alt="Ridham Patel"
-        />
+        <img src="https://res.cloudinary.com/dlqyrgblr/image/upload/v1739861780/a1npzwhwwxzunehdq50y.png"
+          alt="Ridham Patel" />
       </div>
 
       <!-- Heading -->
@@ -242,7 +370,8 @@
       <div class="countdown-row">
         <span class="countdown-badge" id="timer">10</span>
         <div style="flex:1;">
-          <p class="countdown-label" style="margin-bottom:8px;">Auto-redirecting in <span id="timer-label">10</span> seconds</p>
+          <p class="countdown-label" style="margin-bottom:8px;">Auto-redirecting in <span id="timer-label">10</span>
+            seconds</p>
           <div class="progress-track">
             <div class="progress-fill" id="bar"></div>
           </div>
@@ -250,22 +379,22 @@
       </div>
 
       <!-- CTA -->
-      <a class="cta-btn" href="https://ridham-patel.onrender.com" id="cta">
+      <a class="cta-btn" href="https://ridham-patel.vercel.app" id="cta">
         Visit New Portfolio
-        <svg class="cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
+        <svg class="cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </a>
 
       <!-- Footer -->
-      <p class="footer-note">ridham-patel.onrender.com</p>
+      <p class="footer-note">ridham-patel.vercel.app</p>
 
     </div>
   </div>
 
   <script>
-    const NEW_URL = 'https://ridham-patel.onrender.com';
+    const NEW_URL = 'https://ridham-patel.vercel.app/';
     let seconds = 10;
     const timerEl = document.getElementById('timer');
     const timerLabelEl = document.getElementById('timer-label');
@@ -287,4 +416,5 @@
   </script>
 
 </body>
+
 </html>
