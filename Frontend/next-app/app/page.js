@@ -198,7 +198,7 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════════════════════
           SECTION 1 — HERO
       ══════════════════════════════════════════════════════════ */}
-      <section style={{
+      <section className="hero-section" style={{
         minHeight: 'calc(100vh - 5rem)',
         display: 'flex',
         alignItems: 'flex-start',
@@ -412,7 +412,7 @@ export default function HomePage() {
                 style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}
                 className="hero-social-row"
               >
-                <span style={{
+                <span className="hero-social-label" style={{
                   fontSize: 10, fontWeight: 800, letterSpacing: '0.45em',
                   textTransform: 'uppercase', color: 'rgba(235,213,171,0.25)',
                   marginRight: 6, fontFamily: 'Inter, sans-serif',
@@ -426,6 +426,7 @@ export default function HomePage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     title={label}
+                    className="hero-social-icon"
                     whileHover={{ y: -3, scale: 1.12 }}
                     whileTap={{ scale: 0.9 }}
                     transition={{ type: 'spring', stiffness: 400 }}
@@ -486,7 +487,7 @@ export default function HomePage() {
               }} />
 
               {/* Image */}
-              <div style={{
+              <div className="hero-photo-wrap" style={{
                 position: 'relative',
                 width: 320, height: 320,
                 borderRadius: '50%',
@@ -509,6 +510,7 @@ export default function HomePage() {
 
               {/* Open to work pill — replaces "Available for work" */}
               <motion.div
+                className="hero-pill-status"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.1, duration: 0.6 }}
@@ -538,6 +540,7 @@ export default function HomePage() {
 
               {/* Location pill — top-left */}
               <motion.div
+                className="hero-pill-location"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 1.25, duration: 0.6 }}
@@ -561,6 +564,7 @@ export default function HomePage() {
 
               {/* Projects pill — top-right */}
               <motion.div
+                className="hero-pill-projects"
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 1.35, duration: 0.6 }}
@@ -759,19 +763,45 @@ export default function HomePage() {
         @media (max-width: 900px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
-            gap: 40px !important;
+            gap: 32px !important;
             text-align: center;
           }
-          .hero-grid > div:last-child { display: none !important; }
-          .hero-cta-row { justify-content: center !important; }
-          .hero-social-row { justify-content: center !important; }
+          .hero-cta-row  { justify-content: center !important; }
+          .hero-social-row { justify-content: center !important; flex-wrap: nowrap !important; gap: 6px !important; }
+          .hero-social-label { display: none !important; }
+          .hero-social-icon { width: 36px !important; height: 36px !important; }
           .service-grid { grid-template-columns: 1fr !important; }
-          .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .stats-grid   { grid-template-columns: repeat(2, 1fr) !important; }
+
+          /* Show image column on mobile, centered */
+          .hero-grid > div:last-child {
+            display: flex !important;
+            justify-content: center !important;
+            order: -1;
+          }
+
+          /* Shrink the circular image on mobile */
+          .hero-photo-wrap {
+            width: 200px !important;
+            height: 200px !important;
+          }
+
+          /* Hide absolute-positioned floating pills — they overflow on mobile */
+          .hero-pill-status,
+          .hero-pill-location,
+          .hero-pill-projects { display: none !important; }
+
+          /* Section bottom padding so marquee doesn't chipakke */
+          .hero-section { padding-bottom: 48px !important; }
         }
 
         @media (max-width: 640px) {
           .service-grid { grid-template-columns: 1fr !important; }
-          .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .stats-grid   { grid-template-columns: repeat(2, 1fr) !important; }
+          .hero-photo-wrap {
+            width: 160px !important;
+            height: 160px !important;
+          }
         }
 
         @media (max-width: 480px) {
