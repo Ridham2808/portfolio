@@ -79,6 +79,7 @@ function NavIcon({ href, icon: Icon, label, active }) {
                 onHoverStart={() => setHovered(true)}
                 onHoverEnd={() => setHovered(false)}
                 whileTap={{ scale: 0.88 }}
+                className="dock-icon"
                 style={{
                     position: 'relative',
                     width: 48, height: 48,

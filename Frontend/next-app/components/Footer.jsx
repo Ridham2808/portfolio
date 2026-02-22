@@ -103,7 +103,7 @@ export default function Footer() {
                             The Dialogue
                         </p>
 
-                        <h3 style={{
+                        <h3 className="footer-heading" style={{
                             fontSize: 'clamp(36px, 4.5vw, 60px)',
                             fontWeight: 800, letterSpacing: '-0.035em',
                             lineHeight: 1.1, color: '#EBD5AB',
@@ -130,7 +130,7 @@ export default function Footer() {
 
                         <a
                             href={`mailto:${PORTFOLIO_DATA.contact.email}`}
-                            className="footer-email"
+                            className="footer-email footer-email-wrap"
                             style={{ display: 'inline-flex', alignItems: 'center', gap: 20, textDecoration: 'none' }}
                         >
                             <div style={{ position: 'relative', width: 64, height: 64, flexShrink: 0 }}>
@@ -203,7 +203,7 @@ export default function Footer() {
                             <div style={{
                                 position: 'relative', zIndex: 10,
                                 display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12,
-                            }}>
+                            }} className="social-grid">
                                 {SOCIALS.map(({ name, url }) => (
                                     <a
                                         key={name}
@@ -257,7 +257,7 @@ export default function Footer() {
                     }}>
                         © {new Date().getFullYear()}
                     </p>
-                    <span style={{
+                    <span className="footer-bottom-name" style={{
                         fontSize: 'clamp(60px, 7vw, 96px)',
                         fontFamily: '"Dancing Script", cursive',
                         fontWeight: 700, color: '#EBD5AB',
@@ -275,7 +275,24 @@ export default function Footer() {
         .social-item:hover .social-icon-wrap { background: rgba(139,174,102,0.2) !important; color: #EBD5AB !important; }
         .social-item:hover span { color: rgba(235,213,171,0.75) !important; }
         .networks-card:hover { border-color: rgba(139,174,102,0.22) !important; }
-        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr !important; } }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr !important; }
+            .footer-heading { font-size: clamp(28px, 8vw, 44px) !important; word-break: break-word; }
+            .footer-email-wrap { flex-wrap: wrap !important; gap: 12px !important; }
+            .email-text { font-size: 14px !important; word-break: break-all !important; }
+            .networks-card { padding: 28px 20px !important; border-radius: 24px !important; }
+            .social-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+            .social-item { padding: 12px 10px !important; gap: 10px !important; }
+            .social-icon-wrap { width: 34px !important; height: 34px !important; }
+            .footer-bottom-name { font-size: clamp(40px, 10vw, 72px) !important; }
+        }
+
+        @media (max-width: 480px) {
+            .footer-heading { font-size: clamp(24px, 7vw, 36px) !important; }
+            .social-grid { grid-template-columns: 1fr !important; }
+            .networks-card { padding: 24px 16px !important; }
+        }
       `}</style>
         </footer>
     );
