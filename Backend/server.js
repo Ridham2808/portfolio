@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const contactRoute = require('./contactRoute');
+const projectRoute = require('./projectRoute');
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 // Routes
 app.use('/contact', contactRoute);
+app.use('/projects', projectRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
