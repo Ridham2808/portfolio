@@ -6,7 +6,7 @@
 
 **Full Stack Developer · UI/UX Designer · B.Tech CSE @ Rai University**
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Portfolio-ridham--patel.onrender.com-8BAE66?style=for-the-badge&labelColor=1B211A)](https://ridham-patel.onrender.com)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Portfolio-ridham--patel.vercel.app-8BAE66?style=for-the-badge&labelColor=1B211A)](https://ridham-patel.vercel.app)
 [![GitHub](https://img.shields.io/badge/GitHub-Ridham2808-white?style=for-the-badge&logo=github&labelColor=1B211A)](https://github.com/Ridham2808)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-patel--ridham-0A66C2?style=for-the-badge&logo=linkedin&labelColor=1B211A)](https://www.linkedin.com/in/patel-ridham/)
 
@@ -26,7 +26,7 @@ A premium personal portfolio built with **Next.js 16**, featuring a dark glassmo
 
 | Link | Description |
 |---|---|
-| [ridham-patel.onrender.com](https://ridham-patel.onrender.com) | ✅ **New Portfolio** (Current) |
+| [ridham-patel.vercel.app](https://ridham-patel.vercel.app) | ✅ **New Portfolio** (Current) |
 | [portfolio-77ct.onrender.com](https://portfolio-77ct.onrender.com/) | 🔁 Old portfolio — auto-redirects to new |
 
 ---
