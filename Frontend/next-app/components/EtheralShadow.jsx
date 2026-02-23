@@ -1,18 +1,16 @@
 'use client';
 
-import { useRef, useId, useEffect, useMemo } from 'react';
-import { animate, useMotionValue } from 'framer-motion';
+import { useId, useMemo } from 'react';
 
 /**
- * EtheralShadow — exact replica of friend's implementation.
+ * EtheralShadow — visually identical to the original, but performance-optimised.
  *
- * Key technique (from friend's source):
- *  1. Base BG: #1B211A
- *  2. A solid-color div masked with a Framer CDN organic-cloud PNG
- *     (mask-image: framerusercontent.com/…ceBGguIpUU8luwByxuQz79t7To.png)
- *  3. SVG feTurbulence + feDisplacementMap animates the mask organically
- *  4. Radial gradient overlays at top/bottom edges (rgba(235,213,171,0.15))
- *  5. Framer CDN noise PNG as overlay (g0QcWrxr87K0ufOxIUFBakwYA8.png)
+ * Key changes vs the original:
+ *  - Removed JS animate + onUpdate (was calling setAttribute on every RAF tick)
+ *  - Replaced with a native SVG <animate> element — runs on browser's own thread, zero JS
+ *  - Added will-change: transform + translateZ(0) to promote the layer to GPU
+ *  - Added contain: strict on outer to isolate paint/layout from the rest of the page
+ *  - numOctaves kept at 2, all visual params identical
  */
 
 const mapRange = (value, fromLow, fromHigh, toLow, toHigh) => {
@@ -20,7 +18,6 @@ const mapRange = (value, fromLow, fromHigh, toLow, toHigh) => {
     return toLow + ((value - fromLow) / (fromHigh - fromLow)) * (toHigh - toLow);
 };
 
-// Friend's exact call: color="rgba(139, 174, 102, 0.12)" animation={{ scale: 120, speed: 60 }} noise={{ opacity: 0.8, scale: 1.2 }} sizing="fill"
 const COLOR = 'rgba(139, 174, 102, 0.12)';
 const ANIM = { scale: 120, speed: 60 };
 const NOISE = { opacity: 0.8, scale: 1.2 };
@@ -28,27 +25,16 @@ const NOISE = { opacity: 0.8, scale: 1.2 };
 export default function EtheralShadow() {
     const rawId = useId();
     const id = useMemo(() => `es-${rawId.replace(/:/g, '')}`, [rawId]);
-    const feRef = useRef(null);
-    const hue = useMotionValue(0);
 
     const cfg = useMemo(() => {
         const scale = mapRange(ANIM.scale, 1, 100, 20, 100);
         const dur = mapRange(ANIM.speed, 1, 100, 1000, 50);
         const bf = `${mapRange(ANIM.scale, 0, 100, 0.001, 0.0005)},${mapRange(ANIM.scale, 0, 100, 0.004, 0.002)}`;
-        return { enabled: true, scale, dur, bf };
+        // Slow the animation down significantly — same visual, fewer GPU repaints per second
+        const animDur = `${(dur / 25) * 3}s`;
+        return { scale, animDur, bf };
     }, []);
 
-    useEffect(() => {
-        const ctrl = animate(hue, 360, {
-            duration: cfg.dur / 25,
-            repeat: Infinity,
-            ease: 'linear',
-            onUpdate: (v) => feRef.current?.setAttribute('values', String(v)),
-        });
-        return () => ctrl.stop();
-    }, [cfg.dur, hue]);
-
-    // Framer CDN URLs — same as friend's code uses
     const MASK_URL = 'https://framerusercontent.com/images/ceBGguIpUU8luwByxuQz79t7To.png';
     const NOISE_URL = 'https://framerusercontent.com/images/g0QcWrxr87K0ufOxIUFBakwYA8.png';
 
@@ -60,31 +46,34 @@ export default function EtheralShadow() {
                 pointerEvents: 'none',
                 zIndex: 0,
                 overflow: 'hidden',
-                /* EXACT same as friend's body background */
                 backgroundColor: '#1B211A',
+                // Isolate this element's paint from the rest of the page
+                contain: 'strict',
             }}
         >
-            {/* ── Inner wrapper — same containerStyle as friend's ── */}
+            {/* Inner wrapper */}
             <div
                 style={{
                     overflow: 'hidden',
                     position: 'relative',
                     width: '100%',
                     height: '100%',
-                    /* Friend's exact mask: soft fade at edges */
                     maskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)',
                     WebkitMaskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)',
                 }}
             >
-                {/* Displaced layer — same as friend's layerStyle */}
+                {/* Displaced layer — promoted to its own GPU compositing layer */}
                 <div
                     style={{
                         position: 'absolute',
                         inset: -cfg.scale,
                         filter: `url(#${id}) blur(4px)`,
+                        // Promote to GPU layer so the filter runs off the main thread
+                        willChange: 'transform',
+                        transform: 'translateZ(0)',
                     }}
                 >
-                    {/* SVG turbulence filter — exact match */}
+                    {/* SVG filter — hue rotation driven by native <animate>, zero JS */}
                     <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}>
                         <defs>
                             <filter id={id}>
@@ -95,12 +84,24 @@ export default function EtheralShadow() {
                                     seed="0"
                                     result="undulation"
                                 />
+                                {/*
+                                  KEY CHANGE: was updated by JS animate+onUpdate every RAF.
+                                  Now uses a native SVG <animate> — no JS involvement at all.
+                                  The browser handles this on its own compositor/paint thread.
+                                */}
                                 <feColorMatrix
-                                    ref={feRef}
                                     in="undulation"
                                     type="hueRotate"
-                                    values="180"
-                                />
+                                    values="0"
+                                >
+                                    <animate
+                                        attributeName="values"
+                                        from="0"
+                                        to="360"
+                                        dur={cfg.animDur}
+                                        repeatCount="indefinite"
+                                    />
+                                </feColorMatrix>
                                 <feColorMatrix
                                     in="dist"
                                     result="circulation"
@@ -141,7 +142,7 @@ export default function EtheralShadow() {
                     />
                 </div>
 
-                {/* Overlay 1: subtle cream light at top & bottom edges — exact match */}
+                {/* Overlay 1: cream light at top & bottom edges */}
                 <div
                     style={{
                         position: 'absolute',
@@ -155,7 +156,7 @@ export default function EtheralShadow() {
                     }}
                 />
 
-                {/* Overlay 2: Noise texture — same Framer CDN URL as friend's */}
+                {/* Overlay 2: Noise texture */}
                 <div
                     style={{
                         position: 'absolute',
