@@ -6,6 +6,7 @@ import {
     Trophy, Code2, BookOpen, Star, Laptop,
     ExternalLink, Github, Eye, Award, Folder,
 } from 'lucide-react';
+import TabButton from '@/components/TabButton';
 
 // ─── Helpers ────────────────────────────────────────
 const driveThumb = (id) => `https://lh3.googleusercontent.com/d/${id}=w800`;
@@ -479,41 +480,18 @@ export default function CertificatesPage() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10, marginBottom: 64 }}
                 >
-                    {TABS.map(({ id, label, icon: Icon, count }) => {
-                        const tabAccent = PLATFORM_COLOR[id];
-                        const isActive = active === id;
-                        return (
-                            <motion.button
-                                key={id}
-                                onClick={() => setActive(id)}
-                                whileHover={{ scale: 1.04 }}
-                                whileTap={{ scale: 0.96 }}
-                                style={{
-                                    display: 'flex', alignItems: 'center', gap: 8,
-                                    padding: '10px 20px', borderRadius: 100,
-                                    fontSize: 11, fontWeight: 800,
-                                    letterSpacing: '0.15em', textTransform: 'uppercase',
-                                    fontFamily: 'Inter, sans-serif', cursor: 'pointer', border: 'none',
-                                    background: isActive ? tabAccent : 'rgba(235,213,171,0.05)',
-                                    color: isActive ? (tabAccent === '#2EC866' || tabAccent === '#149FBF' ? '#0f1a0f' : '#1B211A') : 'rgba(235,213,171,0.5)',
-                                    boxShadow: isActive ? `0 4px 20px ${tabAccent}35` : 'none',
-                                    outline: `1px solid ${isActive ? tabAccent : 'rgba(235,213,171,0.09)'}`,
-                                    transition: 'all 0.25s',
-                                }}
-                            >
-                                <Icon size={13} />
-                                {label}
-                                <span style={{
-                                    width: 20, height: 20, borderRadius: '50%',
-                                    background: isActive ? 'rgba(0,0,0,0.18)' : 'rgba(235,213,171,0.08)',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    fontSize: 9, fontWeight: 900,
-                                }}>
-                                    {count}
-                                </span>
-                            </motion.button>
-                        );
-                    })}
+                    {TABS.map(({ id, label, icon: Icon, count }) => (
+                        <TabButton
+                            key={id}
+                            id={id}
+                            label={label}
+                            count={count}
+                            active={active}
+                            color={PLATFORM_COLOR[id]}
+                            icon={Icon}
+                            onClick={() => setActive(id)}
+                        />
+                    ))}
                 </motion.div>
 
                 {/* ══ CARDS GRID ══ */}

@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Zap, Layers, Code2, Database, Shield, Cloud, BookOpen, Cpu } from 'lucide-react';
+import TabButton from '@/components/TabButton';
 
 // ── Skill Data ─────────────────────────────────────────────────────
 const CATEGORIES = [
@@ -167,39 +168,7 @@ function SkillCard({ skill, index }) {
     );
 }
 
-// ── Category filter pill ────────────────────────────────────────────
-function FilterPill({ cat, isActive, onClick, count }) {
-    const Icon = cat.icon;
-    return (
-        <motion.button
-            onClick={onClick}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            style={{
-                display: 'flex', alignItems: 'center', gap: 7,
-                padding: '10px 18px', borderRadius: 100,
-                border: `1px solid ${isActive ? cat.accent : 'rgba(235,213,171,0.1)'}`,
-                background: isActive ? `${cat.accent}18` : 'rgba(235,213,171,0.03)',
-                color: isActive ? cat.accent : 'rgba(235,213,171,0.42)',
-                fontFamily: 'Inter, sans-serif', fontSize: 12, fontWeight: 700,
-                letterSpacing: '0.05em', cursor: 'pointer', whiteSpace: 'nowrap',
-                transition: 'all 0.25s',
-                boxShadow: isActive ? `0 0 20px ${cat.accent}20` : 'none',
-            }}
-        >
-            <Icon size={13} />
-            {cat.label}
-            <span style={{
-                fontSize: 10, fontWeight: 900,
-                background: isActive ? `${cat.accent}25` : 'rgba(235,213,171,0.07)',
-                color: isActive ? cat.accent : 'rgba(235,213,171,0.3)',
-                padding: '1px 7px', borderRadius: 100, marginLeft: 2,
-            }}>
-                {count}
-            </span>
-        </motion.button>
-    );
-}
+
 
 // ── Section Label ───────────────────────────────────────────────────
 function SectionLabel({ cat, count }) {
@@ -306,10 +275,10 @@ export default function SkillsPage() {
                 </motion.div>
 
                 {/* ── FILTER BAR ── */}
-                <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} style={{ display: 'flex', gap: 8, marginBottom: 28, overflowX: 'auto', paddingBottom: 4 }} className="filter-wrap">
-                    <FilterPill cat={{ id: 'all', label: 'All Skills', icon: Layers, accent: '#8BAE66' }} isActive={activeFilter === 'all'} onClick={() => setActiveFilter('all')} count={SKILLS.length} />
+                <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }} className="filter-wrap">
+                    <TabButton id="all" label="All Skills" count={SKILLS.length} active={activeFilter} color="#8BAE66" icon={Layers} onClick={() => setActiveFilter('all')} />
                     {CATEGORIES.filter(c => c.id !== 'all').map(cat => (
-                        <FilterPill key={cat.id} cat={cat} isActive={activeFilter === cat.id} onClick={() => setActiveFilter(cat.id)} count={counts[cat.id] || 0} />
+                        <TabButton key={cat.id} id={cat.id} label={cat.label} count={counts[cat.id] || 0} active={activeFilter} color={cat.accent} icon={cat.icon} onClick={() => setActiveFilter(cat.id)} />
                     ))}
                 </motion.div>
 

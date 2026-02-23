@@ -1,6 +1,6 @@
 'use client';
-import { useState, useMemo, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
 import { Github, ExternalLink, Play, X, ChevronLeft, ChevronRight, GitPullRequest, AlertCircle, FileText, Code2, Figma as FigmaIcon } from 'lucide-react';
 import { PROJECTS, TABS } from './data';
 
@@ -14,12 +14,136 @@ const CAT = {
     'HTML & CSS': { color: '#FB923C', bg: 'rgba(251,146,60,0.12)', border: 'rgba(251,146,60,0.35)' },
 };
 
-// Extract YouTube embed URL
+// ── Magnetic 3D tilt tab button with cursor-tracking spotlight ─────────────
+function TabButton({ id, label, count, active, color, bg, onClick }) {
+    const ref = useRef(null);
+    const [hov, setHov] = useState(false);
+    const [spot, setSpot] = useState({ x: 50, y: 50 });
+    const on = active === id;
+    const clr = color || A;
+
+    // Raw mouse pos inside button (0-100 percent)
+    const handleMove = useCallback((e) => {
+        const r = ref.current?.getBoundingClientRect();
+        if (!r) return;
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        const y = ((e.clientY - r.top) / r.height) * 100;
+        setSpot({ x, y });
+    }, []);
+
+    // 3D tilt values
+    const rotX = hov ? ((spot.y / 100) - 0.5) * -18 : 0;
+    const rotY = hov ? ((spot.x / 100) - 0.5) * 26 : 0;
+
+    return (
+        <div style={{ perspective: '600px', display: 'inline-block' }}>
+            <motion.button
+                ref={ref}
+                onClick={onClick}
+                onMouseMove={handleMove}
+                onHoverStart={() => setHov(true)}
+                onHoverEnd={() => { setHov(false); setSpot({ x: 50, y: 50 }); }}
+                whileTap={{ scale: 0.93 }}
+                animate={{
+                    rotateX: rotX,
+                    rotateY: rotY,
+                    scale: hov && !on ? 1.08 : 1,
+                    y: hov && !on ? -4 : 0,
+                }}
+                transition={{ type: 'spring', stiffness: 380, damping: 22 }}
+                className={on ? 'tab-btn tab-btn--on' : 'tab-btn'}
+                style={{
+                    position: 'relative',
+                    display: 'inline-flex', alignItems: 'center', gap: 8,
+                    padding: '10px 20px', borderRadius: 100,
+                    border: `1px solid ${on ? clr + '70' : hov ? 'rgba(235,213,171,0.25)' : 'rgba(235,213,171,0.09)'}`,
+                    background: on
+                        ? `linear-gradient(135deg, ${clr}22 0%, ${clr}08 100%)`
+                        : hov ? `radial-gradient(ellipse at ${spot.x}% ${spot.y}%, rgba(139,174,102,0.1) 0%, rgba(8,14,8,0.6) 60%)` : 'rgba(8,14,8,0.55)',
+                    color: on ? clr : hov ? 'rgba(235,213,171,0.85)' : 'rgba(235,213,171,0.35)',
+                    fontSize: 10, fontWeight: 800, letterSpacing: '0.16em', textTransform: 'uppercase',
+                    fontFamily: 'Inter, sans-serif', cursor: on ? 'default' : 'pointer',
+                    backdropFilter: 'blur(12px)',
+                    boxShadow: on
+                        ? `0 0 0 1px ${clr}30, 0 8px 32px ${clr}18, inset 0 1px 0 ${clr}18`
+                        : hov ? `0 8px 28px rgba(0,0,0,0.45), 0 0 0 1px rgba(235,213,171,0.15)` : '0 2px 8px rgba(0,0,0,0.2)',
+                    overflow: 'hidden',
+                    transformStyle: 'preserve-3d',
+                    transition: 'color 0.2s, border-color 0.2s, background 0.18s, box-shadow 0.2s',
+                }}
+            >
+                {/* ── Cursor spotlight inside button ── */}
+                {hov && !on && (
+                    <div style={{
+                        position: 'absolute',
+                        width: 90, height: 90,
+                        borderRadius: '50%',
+                        background: `radial-gradient(circle, ${clr}30 0%, transparent 70%)`,
+                        left: `${spot.x}%`,
+                        top: `${spot.y}%`,
+                        transform: 'translate(-50%, -50%)',
+                        pointerEvents: 'none',
+                        transition: 'left 0.06s linear, top 0.06s linear',
+                    }} />
+                )}
+
+                {/* ── Active tab shimmer sweep ── */}
+                {on && (
+                    <motion.div
+                        initial={{ x: '-130%' }}
+                        animate={{ x: '230%' }}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' }}
+                        style={{
+                            position: 'absolute', top: 0, bottom: 0, left: 0, width: '45%',
+                            background: `linear-gradient(90deg, transparent, ${clr}30, transparent)`,
+                            pointerEvents: 'none',
+                        }}
+                    />
+                )}
+
+                {/* ── Active pulsing outer ring ── */}
+                {on && (
+                    <motion.div
+                        animate={{ opacity: [0.4, 0, 0.4], scale: [1, 1.18, 1] }}
+                        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                        style={{
+                            position: 'absolute', inset: -3,
+                            borderRadius: 100,
+                            border: `1px solid ${clr}55`,
+                            pointerEvents: 'none',
+                        }}
+                    />
+                )}
+
+                {/* Glowing dot on active */}
+                {on && (
+                    <motion.div layoutId="tab-live-dot"
+                        style={{ width: 6, height: 6, borderRadius: '50%', background: clr, flexShrink: 0, boxShadow: `0 0 8px ${clr}, 0 0 20px ${clr}80` }}
+                    />
+                )}
+
+                <span style={{ position: 'relative', zIndex: 1 }}>{label}</span>
+
+                <span style={{
+                    fontSize: 9, fontWeight: 900, padding: '2px 8px', borderRadius: 100,
+                    background: on ? `${clr}28` : hov ? 'rgba(235,213,171,0.1)' : 'rgba(235,213,171,0.06)',
+                    color: on ? clr : hov ? 'rgba(235,213,171,0.7)' : 'rgba(235,213,171,0.22)',
+                    border: on ? `1px solid ${clr}35` : '1px solid transparent',
+                    transition: 'all 0.2s',
+                    position: 'relative', zIndex: 1,
+                }}>
+                    {count}
+                </span>
+            </motion.button>
+        </div>
+    );
+}
+
 function getEmbed(url) {
     if (!url) return null;
-    const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]+)/);
+    const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([-\w]+)/);
     if (yt) return `https://www.youtube.com/embed/${yt[1]}?autoplay=1&rel=0&modestbranding=1`;
-    const gd = url.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
+    const gd = url.match(/drive\.google\.com\/file\/d\/([-\w]+)/);
     if (gd) return `https://drive.google.com/file/d/${gd[1]}/preview`;
     return null;
 }
@@ -81,13 +205,12 @@ function Modal({ project, onClose }) {
                         onMouseLeave={e => e.currentTarget.style.background = 'rgba(235,213,171,0.06)'}><X size={16} /></button>
                 </div>
 
-                {/* Main body — desktop: side-by-side | mobile: stacked */}
+                {/* Main body */}
                 <div className="modal-body" style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
 
-                    {/* LEFT / TOP — large media */}
+                    {/* LEFT / TOP — media */}
                     <div className="modal-media" style={{ flex: '0 0 62%', display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(235,213,171,0.06)', background: '#080e08', overflow: 'hidden' }}>
 
-                        {/* Big media area */}
                         <div style={{ flex: 1, position: 'relative', overflow: 'hidden', minHeight: 0 }}>
                             <AnimatePresence mode="wait">
                                 {tab === 'video' && embedUrl ? (
@@ -112,7 +235,6 @@ function Modal({ project, onClose }) {
                             </AnimatePresence>
                         </div>
 
-                        {/* Thumbnail strip */}
                         {(embedUrl || imgs.length > 0) && (
                             <div style={{ display: 'flex', gap: 8, padding: '8px 12px', background: '#060c06', borderTop: '1px solid rgba(235,213,171,0.05)', flexShrink: 0, overflowX: 'auto' }}>
                                 {embedUrl && (
@@ -133,19 +255,16 @@ function Modal({ project, onClose }) {
 
                     {/* RIGHT / BOTTOM — details */}
                     <div className="modal-details" style={{ flex: 1, overflowY: 'auto', padding: '24px 24px 32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
-                        {/* Title */}
                         <div>
                             <h2 style={{ fontSize: 'clamp(20px, 4vw, 28px)', fontWeight: 900, color: C, letterSpacing: '-0.03em', marginBottom: 6, fontFamily: 'Inter, sans-serif', lineHeight: 1.15 }}>{project.title}</h2>
                             <p style={{ fontSize: 12, color: A, fontWeight: 600, fontFamily: 'Inter, sans-serif', letterSpacing: '0.06em' }}>{project.tagline}</p>
                         </div>
 
-                        {/* Overview */}
                         <div>
                             <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 8, fontFamily: 'Inter, sans-serif' }}>Overview</p>
                             <p style={{ fontSize: 14, color: 'rgba(235,213,171,0.58)', lineHeight: 1.82, fontWeight: 300, fontFamily: 'Inter, sans-serif' }}>{project.description}</p>
                         </div>
 
-                        {/* Key Features */}
                         {project.features?.length > 0 && (
                             <div>
                                 <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 8, fontFamily: 'Inter, sans-serif' }}>Key Features</p>
@@ -159,7 +278,6 @@ function Modal({ project, onClose }) {
                             </div>
                         )}
 
-                        {/* Tech */}
                         <div>
                             <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 8, fontFamily: 'Inter, sans-serif' }}>Technologies</p>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -169,7 +287,6 @@ function Modal({ project, onClose }) {
                             </div>
                         </div>
 
-                        {/* Links */}
                         <div>
                             <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 8, fontFamily: 'Inter, sans-serif' }}>Links</p>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -185,73 +302,193 @@ function Modal({ project, onClose }) {
 }
 
 // ── Project Card ──────────────────────────────────────────────────────────
-function ProjectCard({ project, index, onClick }) {
+function ProjectCard({ project, index, onClick, featured = false }) {
     const col = CAT[project.category] || CAT['Full Stack'];
     const [hov, setHov] = useState(false);
     const hasVideo = project.links.some(l => l.type === 'video');
+    const num = String(index + 1).padStart(2, '0');
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.5, delay: (index % 3) * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.55, delay: (index % 4) * 0.07, ease: [0.22, 1, 0.36, 1] }}
             onHoverStart={() => setHov(true)}
             onHoverEnd={() => setHov(false)}
             onClick={() => onClick(project)}
-            style={{ borderRadius: 22, overflow: 'hidden', cursor: 'pointer', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative', background: 'rgba(16,24,16,0.8)', border: `1px solid ${hov ? col.border : 'rgba(235,213,171,0.06)'}`, transform: hov ? 'translateY(-10px) scale(1.01)' : 'translateY(0) scale(1)', transition: 'transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), border-color 0.3s, box-shadow 0.4s', boxShadow: hov ? `0 28px 70px rgba(0,0,0,0.5), 0 0 0 1px ${col.border}` : '0 4px 20px rgba(0,0,0,0.2)' }}>
-
-            {/* Image */}
-            <div style={{ aspectRatio: '16/10', overflow: 'hidden', position: 'relative', background: '#0a100a' }}>
+            className={featured ? 'proj-card proj-card--featured' : 'proj-card'}
+            style={{
+                position: 'relative',
+                borderRadius: 20,
+                overflow: 'hidden',
+                cursor: 'pointer',
+                height: featured ? 420 : 340,
+                background: '#080e08',
+                boxShadow: hov
+                    ? `0 30px 80px rgba(0,0,0,0.65), 0 0 0 1.5px ${col.color}55, 0 0 60px ${col.color}18`
+                    : '0 4px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(235,213,171,0.05)',
+                transform: hov ? 'translateY(-6px) scale(1.008)' : 'translateY(0) scale(1)',
+                transition: 'transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.45s cubic-bezier(0.22,1,0.36,1)',
+            }}
+        >
+            {/* ── Full-bleed image ── */}
+            <div style={{ position: 'absolute', inset: 0 }}>
                 {project.images?.[0] ? (
-                    <img src={project.images[0]} alt={project.title}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block', transform: hov ? 'scale(1.08)' : 'scale(1)', filter: hov ? 'brightness(0.45)' : 'brightness(0.85) saturate(0.9)', transition: 'transform 0.6s ease, filter 0.4s' }} />
+                    <img
+                        src={project.images[0]}
+                        alt={project.title}
+                        style={{
+                            width: '100%', height: '100%',
+                            objectFit: 'cover', objectPosition: 'top',
+                            display: 'block',
+                            transform: hov ? 'scale(1.06)' : 'scale(1)',
+                            filter: hov ? 'brightness(0.22) saturate(0.6)' : 'brightness(0.88) saturate(0.95)',
+                            transition: 'transform 0.65s cubic-bezier(0.22,1,0.36,1), filter 0.45s ease',
+                        }}
+                    />
                 ) : (
-                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, rgba(139,174,102,0.04) 0%, transparent 100%)' }}>
-                        <Code2 size={36} color="rgba(139,174,102,0.18)" />
+                    <div style={{ width: '100%', height: '100%', background: `linear-gradient(135deg, ${col.bg} 0%, rgba(8,14,8,0.9) 100%)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Code2 size={48} color={col.color} style={{ opacity: 0.2 }} />
                     </div>
                 )}
-
-                {/* Hover CTA */}
-                <motion.div animate={{ opacity: hov ? 1 : 0 }} transition={{ duration: 0.25 }}
-                    style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10, pointerEvents: hov ? 'auto' : 'none' }}>
-                    <motion.div animate={{ scale: hov ? 1 : 0.7, y: hov ? 0 : 12 }} transition={{ duration: 0.3, ease: 'backOut' }}
-                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-                        <div style={{ width: 56, height: 56, borderRadius: '50%', background: A, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 0 30px ${A}60` }}>
-                            {hasVideo ? <Play size={22} color={BG} fill={BG} /> : <ExternalLink size={20} color={BG} />}
-                        </div>
-                        <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: '0.25em', textTransform: 'uppercase', color: C, fontFamily: 'Inter, sans-serif', textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>View Project</span>
-                        {hasVideo && <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: A, fontFamily: 'Inter, sans-serif' }}>▶ Includes Demo Video</span>}
-                    </motion.div>
-                </motion.div>
-
-                {/* Category pill */}
-                <div style={{ position: 'absolute', top: 12, left: 12, fontSize: 8, fontWeight: 800, letterSpacing: '0.28em', textTransform: 'uppercase', color: col.color, padding: '4px 11px', borderRadius: 100, background: 'rgba(10,14,10,0.85)', border: `1px solid ${col.border}`, backdropFilter: 'blur(8px)', fontFamily: 'Inter, sans-serif' }}>{project.category}</div>
-
-                {/* Video badge */}
-                {hasVideo && !hov && (
-                    <div style={{ position: 'absolute', top: 12, right: 12, display: 'flex', alignItems: 'center', gap: 4, fontSize: 8, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: C, padding: '4px 10px', borderRadius: 100, background: 'rgba(10,14,10,0.85)', border: '1px solid rgba(235,213,171,0.12)', backdropFilter: 'blur(8px)', fontFamily: 'Inter, sans-serif' }}>
-                        <Play size={8} fill={C} />Demo
-                    </div>
-                )}
-
-                {/* Gradient bottom */}
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, background: 'linear-gradient(to top, rgba(14,20,14,0.9), transparent)' }} />
+                {/* Dark gradient — just enough so text is readable */}
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(4,8,4,0.82) 0%, rgba(4,8,4,0.28) 40%, rgba(4,8,4,0.0) 72%)' }} />
             </div>
 
-            {/* Content */}
-            <div style={{ padding: '16px 18px 20px', flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <div>
-                    <h3 style={{ fontSize: 15.5, fontWeight: 800, color: C, letterSpacing: '-0.01em', fontFamily: 'Inter, sans-serif', lineHeight: 1.3, marginBottom: 3 }}>{project.title}</h3>
-                    {project.badge && <p style={{ fontSize: 9, fontWeight: 700, color: col.color, letterSpacing: '0.15em', textTransform: 'uppercase', fontFamily: 'Inter, sans-serif' }}>{project.badge}</p>}
-                </div>
-                <p style={{ fontSize: 12, color: 'rgba(235,213,171,0.42)', lineHeight: 1.7, fontWeight: 300, fontFamily: 'Inter, sans-serif', flex: 1 }}>{(project.description || '').slice(0, 100)}…</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 'auto' }}>
-                    {project.technologies.slice(0, 4).map(t => (
-                        <span key={t} style={{ fontSize: 8.5, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(139,174,102,0.7)', padding: '3px 9px', borderRadius: 100, background: 'rgba(139,174,102,0.07)', border: '1px solid rgba(139,174,102,0.14)', fontFamily: 'Inter, sans-serif' }}>{t}</span>
+            {/* ── Giant project number watermark ── */}
+            <div style={{
+                position: 'absolute', top: -10, right: 12,
+                fontSize: featured ? 130 : 110,
+                fontWeight: 900,
+                fontFamily: '"Inter", sans-serif',
+                letterSpacing: '-0.06em',
+                lineHeight: 1,
+                color: col.color,
+                opacity: hov ? 0.06 : 0.035,
+                userSelect: 'none',
+                pointerEvents: 'none',
+                transition: 'opacity 0.4s',
+                zIndex: 1,
+            }}>
+                {num}
+            </div>
+
+            {/* ── Top badges ── */}
+            <div style={{ position: 'absolute', top: 16, left: 16, right: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 4 }}>
+                <span style={{
+                    fontSize: 8, fontWeight: 800, letterSpacing: '0.32em', textTransform: 'uppercase',
+                    color: col.color, padding: '5px 13px', borderRadius: 100,
+                    background: 'rgba(4,8,4,0.8)',
+                    border: `1px solid ${col.color}50`,
+                    backdropFilter: 'blur(12px)',
+                    fontFamily: 'Inter, sans-serif',
+                }}>
+                    {project.category}
+                </span>
+                {hasVideo && (
+                    <span style={{
+                        display: 'flex', alignItems: 'center', gap: 4,
+                        fontSize: 8, fontWeight: 800, letterSpacing: '0.18em', textTransform: 'uppercase',
+                        color: C, padding: '5px 11px', borderRadius: 100,
+                        background: 'rgba(4,8,4,0.8)',
+                        border: '1px solid rgba(235,213,171,0.15)',
+                        backdropFilter: 'blur(12px)',
+                        fontFamily: 'Inter, sans-serif',
+                    }}>
+                        <Play size={8} fill={C} />Demo
+                    </span>
+                )}
+            </div>
+
+            {/* ── Always-visible minimal info at bottom ── */}
+            <div style={{
+                position: 'absolute', bottom: 0, left: 0, right: 0,
+                padding: '0 22px 20px',
+                zIndex: 3,
+                opacity: hov ? 0 : 1,
+                transition: 'opacity 0.22s ease',
+                pointerEvents: 'none',
+            }}>
+                <h3 style={{
+                    fontSize: featured ? 22 : 17,
+                    fontWeight: 800, color: C,
+                    letterSpacing: '-0.025em',
+                    fontFamily: 'Inter, sans-serif',
+                    lineHeight: 1.2,
+                    marginBottom: 4,
+                    textShadow: '0 2px 12px rgba(0,0,0,0.8)',
+                }}>
+                    {project.title}
+                </h3>
+                <p style={{ fontSize: 11, color: A, fontWeight: 600, fontFamily: 'Inter, sans-serif', letterSpacing: '0.04em', opacity: 0.8 }}>
+                    {project.tagline}
+                </p>
+            </div>
+
+            {/* ── Glass reveal panel — slides up on hover ── */}
+            <motion.div
+                animate={{ y: hov ? 0 : '100%', opacity: hov ? 1 : 0 }}
+                transition={{ type: 'spring', stiffness: 340, damping: 30 }}
+                style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0,
+                    padding: '22px 22px 20px',
+                    background: 'rgba(6,12,6,0.94)',
+                    backdropFilter: 'blur(28px)',
+                    WebkitBackdropFilter: 'blur(28px)',
+                    borderTop: `1px solid ${col.color}28`,
+                    zIndex: 5,
+                }}
+            >
+                {/* Accent line */}
+                <div style={{ height: 2, background: `linear-gradient(90deg, ${col.color}, transparent)`, marginBottom: 13, borderRadius: 2, width: '50%' }} />
+
+                <h3 style={{ fontSize: featured ? 19 : 15, fontWeight: 900, color: C, letterSpacing: '-0.02em', fontFamily: 'Inter, sans-serif', marginBottom: 4, lineHeight: 1.2 }}>
+                    {project.title}
+                </h3>
+                <p style={{ fontSize: 11, color: 'rgba(235,213,171,0.5)', fontFamily: 'Inter, sans-serif', marginBottom: 13, lineHeight: 1.5, fontWeight: 300 }}>
+                    {project.tagline}
+                </p>
+
+                {/* Tech pills */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 16 }}>
+                    {project.technologies.slice(0, featured ? 5 : 4).map(t => (
+                        <span key={t} style={{
+                            fontSize: 8.5, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase',
+                            color: col.color, padding: '3px 9px', borderRadius: 100,
+                            background: col.bg, border: `1px solid ${col.color}30`,
+                            fontFamily: 'Inter, sans-serif',
+                        }}>{t}</span>
                     ))}
                 </div>
-            </div>
+
+                {/* CTA row */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span style={{
+                        fontSize: 9.5, fontWeight: 900, letterSpacing: '0.22em', textTransform: 'uppercase',
+                        color: col.color, fontFamily: 'Inter, sans-serif',
+                        display: 'flex', alignItems: 'center', gap: 6,
+                    }}>
+                        {hasVideo ? <><Play size={10} fill={col.color} />Watch Demo</> : <><ExternalLink size={10} />Open Project</>}
+                    </span>
+                    {project.badge && (
+                        <span style={{ fontSize: 9, color: 'rgba(235,213,171,0.3)', fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>
+                            {project.badge}
+                        </span>
+                    )}
+                </div>
+            </motion.div>
+
+            {/* ── Colored glow border on hover ── */}
+            <div style={{
+                position: 'absolute', inset: 0,
+                borderRadius: 20,
+                pointerEvents: 'none',
+                opacity: hov ? 1 : 0,
+                transition: 'opacity 0.4s',
+                boxShadow: `inset 0 0 0 1.5px ${col.color}55`,
+                zIndex: 6,
+            }} />
         </motion.div>
     );
 }
@@ -270,17 +507,23 @@ export default function ProjectsPage() {
     const filtered = useMemo(() => active === 'All' ? PROJECTS : PROJECTS.filter(p => p.category === active), [active]);
 
     return (
-        <div style={{ minHeight: '100vh', paddingBottom: 120, position: 'relative', overflow: 'hidden' }}>
+        <div style={{ minHeight: '100vh', paddingBottom: 140, position: 'relative', overflow: 'hidden' }}>
             {/* Ambient orbs */}
-            <div style={{ position: 'fixed', top: '-5%', right: '-8%', width: 450, height: 450, borderRadius: '50%', background: 'rgba(139,174,102,0.045)', filter: 'blur(110px)', pointerEvents: 'none', zIndex: 0 }} />
-            <div style={{ position: 'fixed', bottom: '10%', left: '-6%', width: 350, height: 350, borderRadius: '50%', background: 'rgba(139,174,102,0.03)', filter: 'blur(90px)', pointerEvents: 'none', zIndex: 0 }} />
+            <div style={{ position: 'fixed', top: '-5%', right: '-8%', width: 500, height: 500, borderRadius: '50%', background: 'rgba(139,174,102,0.04)', filter: 'blur(120px)', pointerEvents: 'none', zIndex: 0 }} />
+            <div style={{ position: 'fixed', bottom: '8%', left: '-5%', width: 380, height: 380, borderRadius: '50%', background: 'rgba(139,174,102,0.03)', filter: 'blur(100px)', pointerEvents: 'none', zIndex: 0 }} />
 
-            <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 28px', position: 'relative', zIndex: 1 }}>
+            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 28px', position: 'relative', zIndex: 1 }}>
 
-                {/* Header */}
-                <motion.div initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} style={{ textAlign: 'center', paddingTop: 12, marginBottom: 60 }}>
+                {/* ── Header ── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    style={{ textAlign: 'center', paddingTop: 12, marginBottom: 64 }}
+                >
                     <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                        style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.55em', textTransform: 'uppercase', color: A, marginBottom: 20, fontFamily: 'Inter, sans-serif' }}>What I've Built</motion.p>
+                        style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.55em', textTransform: 'uppercase', color: A, marginBottom: 20, fontFamily: 'Inter, sans-serif' }}>
+                        What I've Built
+                    </motion.p>
                     <h1 style={{ fontSize: 'clamp(44px, 7vw, 80px)', fontWeight: 900, letterSpacing: '-0.045em', color: C, lineHeight: 1.0, marginBottom: 20, fontFamily: 'Inter, sans-serif' }}>
                         Selected{' '}
                         <em style={{ fontFamily: '"Playfair Display", Georgia, serif', fontStyle: 'italic', color: A }}>Works</em>.
@@ -290,32 +533,53 @@ export default function ProjectsPage() {
                     </p>
                 </motion.div>
 
-                {/* Filter Tabs */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.6 }}
-                    style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, marginBottom: 56 }}>
+                {/* ── Filter Tabs ── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.25, duration: 0.6 }}
+                    style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, marginBottom: 60 }}
+                >
                     {TABS.map(({ id, label }) => {
                         const c = CAT[id];
-                        const on = active === id;
                         return (
-                            <motion.button key={id} onClick={() => setActive(id)} whileTap={{ scale: 0.94 }}
-                                style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 20px', borderRadius: 100, border: `1px solid ${on ? (c?.border || 'rgba(139,174,102,0.35)') : 'rgba(235,213,171,0.08)'}`, background: on ? (c?.bg || 'rgba(139,174,102,0.12)') : 'transparent', color: on ? (c?.color || A) : 'rgba(235,213,171,0.38)', fontSize: 11, fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', fontFamily: 'Inter, sans-serif', cursor: 'pointer', transition: 'all 0.25s' }}>
-                                {label}
-                                <span style={{ fontSize: 9, fontWeight: 700, padding: '1px 7px', borderRadius: 100, background: on ? (c?.border || A) : 'rgba(235,213,171,0.06)', color: on ? (c?.color || A) : 'rgba(235,213,171,0.28)' }}>{counts[id] || 0}</span>
-                            </motion.button>
+                            <TabButton
+                                key={id}
+                                id={id}
+                                label={label}
+                                count={counts[id] || 0}
+                                active={active}
+                                color={c?.color}
+                                bg={c?.bg}
+                                onClick={() => setActive(id)}
+                            />
                         );
                     })}
                 </motion.div>
 
-                {/* Grid */}
+                {/* ── Project Grid ── */}
                 <AnimatePresence mode="wait">
-                    <motion.div key={active} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.3 }}
-                        style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 22 }} className="proj-grid">
-                        {filtered.map((p, i) => <ProjectCard key={p.id} project={p} index={i} onClick={setSelected} />)}
+                    <motion.div
+                        key={active}
+                        initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14 }}
+                        transition={{ duration: 0.28 }}
+                        className="proj-grid-wrap"
+                    >
+                        {filtered.map((p, i) => (
+                            <ProjectCard
+                                key={p.id}
+                                project={p}
+                                index={i}
+                                onClick={setSelected}
+                                featured={i === 0}
+                            />
+                        ))}
                     </motion.div>
                 </AnimatePresence>
 
-                <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-                    style={{ textAlign: 'center', color: 'rgba(235,213,171,0.18)', fontSize: 10, fontWeight: 700, letterSpacing: '0.4em', textTransform: 'uppercase', marginTop: 52, fontFamily: 'Inter, sans-serif' }}>
+                <motion.p
+                    initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+                    style={{ textAlign: 'center', color: 'rgba(235,213,171,0.14)', fontSize: 10, fontWeight: 700, letterSpacing: '0.4em', textTransform: 'uppercase', marginTop: 56, fontFamily: 'Inter, sans-serif' }}
+                >
                     {filtered.length} project{filtered.length !== 1 ? 's' : ''}
                 </motion.p>
             </div>
@@ -323,52 +587,57 @@ export default function ProjectsPage() {
             <AnimatePresence>{selected && <Modal project={selected} onClose={() => setSelected(null)} />}</AnimatePresence>
 
             <style>{`
-        @media (max-width: 960px) { .proj-grid { grid-template-columns: repeat(2,1fr) !important; } }
-        @media (max-width: 540px) { .proj-grid { grid-template-columns: 1fr !important; gap: 14px !important; } }
+        /* ── Filter tab hover — CSS handles colour, framer handles transform ── */
+        .tab-btn { transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s; }
+        .tab-btn:not(.tab-btn--on):hover {
+          color: rgba(235,213,171,0.75) !important;
+          border-color: rgba(235,213,171,0.22) !important;
+          background: rgba(139,174,102,0.07) !important;
+          box-shadow: 0 4px 18px rgba(0,0,0,0.35) !important;
+        }
+        .tab-btn--on { cursor: default; }
 
-        /* ── Modal mobile responsive ── */
-        @media (max-width: 768px) {
-          .modal-backdrop {
-            padding: 0 !important;
-            align-items: flex-end !important;
-          }
-          .modal-inner {
-            max-width: 100% !important;
-            width: 100% !important;
-            height: 90vh !important;
-            border-radius: 20px 20px 0 0 !important;
-            overflow-y: auto !important;
-            overflow-x: hidden !important;
-          }
-          .modal-body {
-            flex-direction: column !important;
-            overflow: visible !important;
-            flex: 0 0 auto !important;
-          }
-          .modal-media {
-            flex: 0 0 auto !important;
-            width: 100% !important;
-            height: 55vw !important;
-            min-height: 220px !important;
-            max-height: 340px !important;
-            border-right: none !important;
-            border-bottom: 1px solid rgba(235,213,171,0.08) !important;
-          }
-          .modal-details {
-            flex: 0 0 auto !important;
-            overflow-y: visible !important;
-            padding: 20px 18px 48px !important;
-            gap: 18px !important;
-          }
+        /* ── Project grid ── */
+        .proj-grid-wrap {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+        /* First card spans 2 columns — featured */
+        .proj-grid-wrap > div:first-child {
+          grid-column: span 2;
         }
 
+        @media (max-width: 1024px) {
+          .proj-grid-wrap { grid-template-columns: repeat(2, 1fr); }
+          .proj-grid-wrap > div:first-child { grid-column: span 2; }
+        }
+        @media (max-width: 640px) {
+          .proj-grid-wrap { grid-template-columns: 1fr; gap: 14px; }
+          .proj-grid-wrap > div:first-child { grid-column: span 1; }
+          .proj-card--featured { height: 300px !important; }
+          .proj-card { height: 270px !important; }
+        }
+
+        /* ── Modal mobile ── */
+        @media (max-width: 768px) {
+          .modal-backdrop { padding: 0 !important; align-items: flex-end !important; }
+          .modal-inner {
+            max-width: 100% !important; width: 100% !important;
+            height: 90vh !important; border-radius: 20px 20px 0 0 !important;
+            overflow-y: auto !important; overflow-x: hidden !important;
+          }
+          .modal-body { flex-direction: column !important; overflow: visible !important; flex: 0 0 auto !important; }
+          .modal-media {
+            flex: 0 0 auto !important; width: 100% !important;
+            height: 55vw !important; min-height: 220px !important; max-height: 340px !important;
+            border-right: none !important; border-bottom: 1px solid rgba(235,213,171,0.08) !important;
+          }
+          .modal-details { flex: 0 0 auto !important; overflow-y: visible !important; padding: 20px 18px 48px !important; gap: 18px !important; }
+        }
         @media (max-width: 480px) {
           .modal-inner { height: 92vh !important; }
-          .modal-media {
-            height: 58vw !important;
-            min-height: 210px !important;
-            max-height: 300px !important;
-          }
+          .modal-media { height: 58vw !important; min-height: 210px !important; max-height: 300px !important; }
         }
       `}</style>
         </div>
