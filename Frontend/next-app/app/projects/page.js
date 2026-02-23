@@ -58,32 +58,34 @@ function Modal({ project, onClose }) {
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
             onClick={onClose}
-            style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(4,8,4,0.95)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+            className="modal-backdrop"
+            style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(4,8,4,0.95)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
 
             <motion.div initial={{ opacity: 0, scale: 0.88, y: 50 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.88 }}
                 transition={{ type: 'spring', stiffness: 240, damping: 24 }}
                 onClick={e => e.stopPropagation()}
+                className="modal-inner"
                 style={{ width: '100%', maxWidth: '96vw', height: '92vh', borderRadius: 28, background: 'rgba(14,22,14,0.99)', border: '1px solid rgba(139,174,102,0.18)', boxShadow: '0 60px 160px rgba(0,0,0,0.9), 0 0 0 1px rgba(139,174,102,0.06)', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
 
                 {/* Top accent bar */}
                 <div style={{ height: 3, background: `linear-gradient(90deg, transparent 0%, ${col.color} 40%, ${col.color} 60%, transparent 100%)`, flexShrink: 0 }} />
 
                 {/* Header bar */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 24px', borderBottom: '1px solid rgba(235,213,171,0.06)', flexShrink: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                        <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.3em', textTransform: 'uppercase', color: col.color, padding: '4px 12px', borderRadius: 100, background: col.bg, border: `1px solid ${col.border}`, fontFamily: 'Inter, sans-serif' }}>{project.category}</span>
-                        {project.badge && <span style={{ fontSize: 9, fontWeight: 700, color: 'rgba(235,213,171,0.3)', letterSpacing: '0.2em', textTransform: 'uppercase', fontFamily: 'Inter, sans-serif' }}>{project.badge}</span>}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', borderBottom: '1px solid rgba(235,213,171,0.06)', flexShrink: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+                        <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.3em', textTransform: 'uppercase', color: col.color, padding: '4px 12px', borderRadius: 100, background: col.bg, border: `1px solid ${col.border}`, fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>{project.category}</span>
+                        {project.badge && <span style={{ fontSize: 9, fontWeight: 700, color: 'rgba(235,213,171,0.3)', letterSpacing: '0.2em', textTransform: 'uppercase', fontFamily: 'Inter, sans-serif', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{project.badge}</span>}
                     </div>
-                    <button onClick={onClose} style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(235,213,171,0.06)', border: '1px solid rgba(235,213,171,0.12)', color: C, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s' }}
+                    <button onClick={onClose} style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(235,213,171,0.06)', border: '1px solid rgba(235,213,171,0.12)', color: C, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s', flexShrink: 0 }}
                         onMouseEnter={e => e.currentTarget.style.background = 'rgba(235,213,171,0.12)'}
                         onMouseLeave={e => e.currentTarget.style.background = 'rgba(235,213,171,0.06)'}><X size={16} /></button>
                 </div>
 
-                {/* Main — splits horizontally */}
-                <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+                {/* Main body — desktop: side-by-side | mobile: stacked */}
+                <div className="modal-body" style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
 
-                    {/* LEFT — large media */}
-                    <div style={{ flex: '0 0 62%', display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(235,213,171,0.06)', background: '#080e08', overflow: 'hidden' }}>
+                    {/* LEFT / TOP — large media */}
+                    <div className="modal-media" style={{ flex: '0 0 62%', display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(235,213,171,0.06)', background: '#080e08', overflow: 'hidden' }}>
 
                         {/* Big media area */}
                         <div style={{ flex: 1, position: 'relative', overflow: 'hidden', minHeight: 0 }}>
@@ -97,14 +99,14 @@ function Modal({ project, onClose }) {
                                         <img src={imgs[tab]} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', display: 'block', background: '#060c06' }} />
                                         {imgs.length > 1 && (
                                             <>
-                                                <button onClick={e => { e.stopPropagation(); setTab(t => (t - 1 + imgs.length) % imgs.length); }} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 40, height: 40, borderRadius: '50%', background: 'rgba(0,0,0,0.7)', border: `1px solid rgba(139,174,102,0.3)`, color: A, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}><ChevronLeft size={18} /></button>
-                                                <button onClick={e => { e.stopPropagation(); setTab(t => (t + 1) % imgs.length); }} style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', width: 40, height: 40, borderRadius: '50%', background: 'rgba(0,0,0,0.7)', border: `1px solid rgba(139,174,102,0.3)`, color: A, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}><ChevronRight size={18} /></button>
+                                                <button onClick={e => { e.stopPropagation(); setTab(t => (t - 1 + imgs.length) % imgs.length); }} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', width: 36, height: 36, borderRadius: '50%', background: 'rgba(0,0,0,0.7)', border: `1px solid rgba(139,174,102,0.3)`, color: A, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)', zIndex: 10 }}><ChevronLeft size={16} /></button>
+                                                <button onClick={e => { e.stopPropagation(); setTab(t => (t + 1) % imgs.length); }} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', width: 36, height: 36, borderRadius: '50%', background: 'rgba(0,0,0,0.7)', border: `1px solid rgba(139,174,102,0.3)`, color: A, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)', zIndex: 10 }}><ChevronRight size={16} /></button>
                                             </>
                                         )}
                                     </motion.div>
                                 ) : (
                                     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, color: 'rgba(235,213,171,0.12)' }}>
-                                        <Code2 size={52} /><p style={{ fontSize: 10, letterSpacing: '0.25em', textTransform: 'uppercase', fontFamily: 'Inter, sans-serif' }}>Open Source Contribution</p>
+                                        <Code2 size={48} /><p style={{ fontSize: 10, letterSpacing: '0.25em', textTransform: 'uppercase', fontFamily: 'Inter, sans-serif' }}>Open Source Contribution</p>
                                     </div>
                                 )}
                             </AnimatePresence>
@@ -112,7 +114,7 @@ function Modal({ project, onClose }) {
 
                         {/* Thumbnail strip */}
                         {(embedUrl || imgs.length > 0) && (
-                            <div style={{ display: 'flex', gap: 8, padding: '10px 14px', background: '#060c06', borderTop: '1px solid rgba(235,213,171,0.05)', flexShrink: 0, overflowX: 'auto' }}>
+                            <div style={{ display: 'flex', gap: 8, padding: '8px 12px', background: '#060c06', borderTop: '1px solid rgba(235,213,171,0.05)', flexShrink: 0, overflowX: 'auto' }}>
                                 {embedUrl && (
                                     <button onClick={() => setTab('video')}
                                         style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 10, flexShrink: 0, border: `1.5px solid ${tab === 'video' ? A : 'rgba(235,213,171,0.08)'}`, background: tab === 'video' ? 'rgba(139,174,102,0.12)' : 'transparent', color: tab === 'video' ? A : 'rgba(235,213,171,0.3)', fontSize: 10, fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', fontFamily: 'Inter, sans-serif', cursor: 'pointer', transition: 'all 0.2s' }}>
@@ -121,7 +123,7 @@ function Modal({ project, onClose }) {
                                 )}
                                 {imgs.map((src, i) => (
                                     <button key={i} onClick={() => setTab(i)}
-                                        style={{ width: 64, height: 44, borderRadius: 10, overflow: 'hidden', border: `2px solid ${tab === i ? A : 'rgba(235,213,171,0.06)'}`, flexShrink: 0, padding: 0, cursor: 'pointer', opacity: tab === i ? 1 : 0.45, transition: 'all 0.2s', background: '#060c06' }}>
+                                        style={{ width: 56, height: 40, borderRadius: 10, overflow: 'hidden', border: `2px solid ${tab === i ? A : 'rgba(235,213,171,0.06)'}`, flexShrink: 0, padding: 0, cursor: 'pointer', opacity: tab === i ? 1 : 0.45, transition: 'all 0.2s', background: '#060c06' }}>
                                         <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
                                     </button>
                                 ))}
@@ -129,25 +131,25 @@ function Modal({ project, onClose }) {
                         )}
                     </div>
 
-                    {/* RIGHT — details */}
-                    <div style={{ flex: 1, overflowY: 'auto', padding: '28px 28px 32px', display: 'flex', flexDirection: 'column', gap: 24 }}>
+                    {/* RIGHT / BOTTOM — details */}
+                    <div className="modal-details" style={{ flex: 1, overflowY: 'auto', padding: '24px 24px 32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
                         {/* Title */}
                         <div>
-                            <h2 style={{ fontSize: 28, fontWeight: 900, color: C, letterSpacing: '-0.03em', marginBottom: 6, fontFamily: 'Inter, sans-serif', lineHeight: 1.15 }}>{project.title}</h2>
+                            <h2 style={{ fontSize: 'clamp(20px, 4vw, 28px)', fontWeight: 900, color: C, letterSpacing: '-0.03em', marginBottom: 6, fontFamily: 'Inter, sans-serif', lineHeight: 1.15 }}>{project.title}</h2>
                             <p style={{ fontSize: 12, color: A, fontWeight: 600, fontFamily: 'Inter, sans-serif', letterSpacing: '0.06em' }}>{project.tagline}</p>
                         </div>
 
                         {/* Overview */}
                         <div>
-                            <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 10, fontFamily: 'Inter, sans-serif' }}>Overview</p>
+                            <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 8, fontFamily: 'Inter, sans-serif' }}>Overview</p>
                             <p style={{ fontSize: 14, color: 'rgba(235,213,171,0.58)', lineHeight: 1.82, fontWeight: 300, fontFamily: 'Inter, sans-serif' }}>{project.description}</p>
                         </div>
 
                         {/* Key Features */}
                         {project.features?.length > 0 && (
                             <div>
-                                <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 10, fontFamily: 'Inter, sans-serif' }}>Key Features</p>
-                                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                                <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 8, fontFamily: 'Inter, sans-serif' }}>Key Features</p>
+                                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 7 }}>
                                     {project.features.map((f, i) => (
                                         <li key={i} style={{ display: 'flex', gap: 10, fontSize: 13.5, color: 'rgba(235,213,171,0.6)', fontFamily: 'Inter, sans-serif', lineHeight: 1.55 }}>
                                             <span style={{ color: A, flexShrink: 0, marginTop: 2 }}>▸</span>{f}
@@ -159,7 +161,7 @@ function Modal({ project, onClose }) {
 
                         {/* Tech */}
                         <div>
-                            <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 10, fontFamily: 'Inter, sans-serif' }}>Technologies</p>
+                            <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 8, fontFamily: 'Inter, sans-serif' }}>Technologies</p>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                                 {project.technologies.map(t => (
                                     <span key={t} style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: A, padding: '6px 13px', borderRadius: 100, background: 'rgba(139,174,102,0.08)', border: '1px solid rgba(139,174,102,0.2)', fontFamily: 'Inter, sans-serif' }}>{t}</span>
@@ -169,7 +171,7 @@ function Modal({ project, onClose }) {
 
                         {/* Links */}
                         <div>
-                            <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 10, fontFamily: 'Inter, sans-serif' }}>Links</p>
+                            <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', color: 'rgba(235,213,171,0.22)', marginBottom: 8, fontFamily: 'Inter, sans-serif' }}>Links</p>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                                 {nonVideoLinks.map(l => <LinkBtn key={l.type + l.url} link={l} />)}
                                 {videoLink && <LinkBtn link={{ ...videoLink, label: 'Watch Demo' }} />}
@@ -323,6 +325,46 @@ export default function ProjectsPage() {
             <style>{`
         @media (max-width: 960px) { .proj-grid { grid-template-columns: repeat(2,1fr) !important; } }
         @media (max-width: 540px) { .proj-grid { grid-template-columns: 1fr !important; gap: 14px !important; } }
+
+        /* Modal mobile responsive */
+        @media (max-width: 768px) {
+          .modal-backdrop { padding: 0 !important; align-items: flex-end !important; }
+          .modal-inner {
+            max-width: 100% !important;
+            width: 100% !important;
+            height: 96vh !important;
+            border-radius: 24px 24px 0 0 !important;
+          }
+          .modal-body {
+            flex-direction: column !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+          }
+          .modal-media {
+            flex: 0 0 auto !important;
+            height: 42vw !important;
+            min-height: 200px !important;
+            max-height: 280px !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(235,213,171,0.06) !important;
+            width: 100% !important;
+          }
+          .modal-details {
+            flex: 1 1 auto !important;
+            overflow-y: visible !important;
+            padding: 20px 18px 40px !important;
+            gap: 16px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .modal-inner { height: 98vh !important; }
+          .modal-media {
+            height: 52vw !important;
+            min-height: 180px !important;
+            max-height: 240px !important;
+          }
+        }
       `}</style>
         </div>
     );
