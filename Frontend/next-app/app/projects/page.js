@@ -326,43 +326,48 @@ export default function ProjectsPage() {
         @media (max-width: 960px) { .proj-grid { grid-template-columns: repeat(2,1fr) !important; } }
         @media (max-width: 540px) { .proj-grid { grid-template-columns: 1fr !important; gap: 14px !important; } }
 
-        /* Modal mobile responsive */
+        /* ── Modal mobile responsive ── */
         @media (max-width: 768px) {
-          .modal-backdrop { padding: 0 !important; align-items: flex-end !important; }
+          .modal-backdrop {
+            padding: 0 !important;
+            align-items: flex-end !important;
+          }
           .modal-inner {
             max-width: 100% !important;
             width: 100% !important;
-            height: 96vh !important;
-            border-radius: 24px 24px 0 0 !important;
-          }
-          .modal-body {
-            flex-direction: column !important;
+            height: 90vh !important;
+            border-radius: 20px 20px 0 0 !important;
             overflow-y: auto !important;
             overflow-x: hidden !important;
           }
+          .modal-body {
+            flex-direction: column !important;
+            overflow: visible !important;
+            flex: 0 0 auto !important;
+          }
           .modal-media {
             flex: 0 0 auto !important;
-            height: 42vw !important;
-            min-height: 200px !important;
-            max-height: 280px !important;
-            border-right: none !important;
-            border-bottom: 1px solid rgba(235,213,171,0.06) !important;
             width: 100% !important;
+            height: 55vw !important;
+            min-height: 220px !important;
+            max-height: 340px !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(235,213,171,0.08) !important;
           }
           .modal-details {
-            flex: 1 1 auto !important;
+            flex: 0 0 auto !important;
             overflow-y: visible !important;
-            padding: 20px 18px 40px !important;
-            gap: 16px !important;
+            padding: 20px 18px 48px !important;
+            gap: 18px !important;
           }
         }
 
         @media (max-width: 480px) {
-          .modal-inner { height: 98vh !important; }
+          .modal-inner { height: 92vh !important; }
           .modal-media {
-            height: 52vw !important;
-            min-height: 180px !important;
-            max-height: 240px !important;
+            height: 58vw !important;
+            min-height: 210px !important;
+            max-height: 300px !important;
           }
         }
       `}</style>

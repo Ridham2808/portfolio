@@ -1,6 +1,6 @@
 import './globals.css';
 import Dock from '@/components/Dock';
-import CustomCursor from '@/components/CustomCursor';
+
 import Footer from '@/components/Footer';
 import EtheralShadow from '@/components/EtheralShadow';
 
@@ -62,8 +62,7 @@ export default function RootLayout({ children }) {
             'radial-gradient(ellipse 120% 120% at 50% 50%, transparent 50%, rgba(6,9,6,0.75) 100%)',
         }} />
 
-        {/* Custom cursor */}
-        <CustomCursor />
+
 
         {/* Floating Dock */}
         <Dock />
