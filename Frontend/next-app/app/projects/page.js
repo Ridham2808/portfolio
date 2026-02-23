@@ -183,7 +183,7 @@ function Modal({ project, onClose }) {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
             onClick={onClose}
             className="modal-backdrop"
-            style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(4,8,4,0.95)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
+            style={{ position: 'fixed', inset: 0, zIndex: 99, background: 'rgba(4,8,4,0.95)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
 
             <motion.div initial={{ opacity: 0, scale: 0.88, y: 50 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.88 }}
                 transition={{ type: 'spring', stiffness: 240, damping: 24 }}
@@ -626,18 +626,19 @@ export default function ProjectsPage() {
             max-width: 100% !important; width: 100% !important;
             height: 90vh !important; border-radius: 20px 20px 0 0 !important;
             overflow-y: auto !important; overflow-x: hidden !important;
+            margin-top: 60px !important;
           }
           .modal-body { flex-direction: column !important; overflow: visible !important; flex: 0 0 auto !important; }
           .modal-media {
             flex: 0 0 auto !important; width: 100% !important;
-            height: 55vw !important; min-height: 220px !important; max-height: 340px !important;
+            height: 70vw !important; min-height: 280px !important; max-height: 400px !important;
             border-right: none !important; border-bottom: 1px solid rgba(235,213,171,0.08) !important;
           }
           .modal-details { flex: 0 0 auto !important; overflow-y: visible !important; padding: 20px 18px 48px !important; gap: 18px !important; }
         }
         @media (max-width: 480px) {
-          .modal-inner { height: 92vh !important; }
-          .modal-media { height: 58vw !important; min-height: 210px !important; max-height: 300px !important; }
+          .modal-inner { height: 92vh !important; margin-top: 80px !important; }
+          .modal-media { height: 85vw !important; min-height: 320px !important; max-height: 480px !important; }
         }
       `}</style>
         </div>
