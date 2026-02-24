@@ -22,7 +22,7 @@ const GALLERIES = [
                 sub: 'Where discipline is built, not born.',
             },
             {
-                url: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1771737666/Gym_2_ccao8t.jpg',
+                url: 'https://res.cloudinary.com/dlqyrgblr/image/upload/v1771906570/Gym_2_qzczl2.jpg',
                 title: 'Stay Locked In',
                 sub: 'The only bad workout is the one you skipped.',
             },
