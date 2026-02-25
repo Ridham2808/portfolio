@@ -54,6 +54,18 @@ const CERTS = {
             links: [{ label: 'Certificate', icon: Award, url: driveView('1xPCa_z2s4fmpY0YVDSQWBI1cvmkpOuoX') }],
         },
         {
+            title: 'COGNIVIA (IEEE Sampark)',
+            issuer: 'Hackathon',
+            year: '2026',
+            desc: 'Participated in the online ideation and development phase of COGNIVIA at PDEU. Focused on brainstorming and designing human-centric technology solutions for complex problem statements as part of the IEEE Sampark 2026 event.',
+            tags: ['IDEATION', 'PROBLEM SOLVING', 'UI/UX DESIGN', 'TEAM COLLABORATION'],
+            certUrl: driveView('1dOoXS6R9rcndWSZqb8ZniNjQO9q6uE7Q'),
+            img: driveThumb('1dOoXS6R9rcndWSZqb8ZniNjQO9q6uE7Q'),
+            links: [
+                { label: 'Certificate', icon: Award, url: driveView('1dOoXS6R9rcndWSZqb8ZniNjQO9q6uE7Q') },
+            ],
+        },
+        {
             title: 'Ideathon',
             issuer: 'Hackathon',
             year: '2025',
