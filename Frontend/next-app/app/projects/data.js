@@ -98,6 +98,34 @@ export const PROJECTS = [
         badge: '🏆 Indradhanu 2026',
     },
     {
+        id: 'atlyss', title: 'Atlyss', category: 'Hackathon',
+        tagline: 'Your Pocket Personal Trainer & Smart Gym Ecosystem.',
+        description: 'Secured 4th place at the OpenPools Doppelganger 30-Hour Hackathon! Atlyss is an AI-powered smart gym management platform that replaces generic workout sheets with hyper-personalized, dynamic fitness and diet blueprints. It seamlessly connects admins, trainers, and members through real-time portals and smart attendance kiosks to optimize both gym operations and individual coaching.',
+        features: [
+            'AI-powered personalized workout & diet generation',
+            'Real-time smart attendance kiosk integration',
+            'Dedicated Admin, Trainer, and Member dashboards',
+            'Trainer review system for modifying AI plans',
+            'Advanced Body Composition Analysis (BCA) tracking'
+        ],
+        technologies: ['React 19', 'TailwindCSS 4.0', 'Node.js', 'Socket.io', 'Express.js'],
+        images: [
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1773211974/Admin_Dashboard_prgf4w.png',
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1773211974/Trainer_Diet_Plan_Management_cv8awu.png',
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1773211974/Profile_ergrmi.png',
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1773211974/Trainer_Dashboard_btbmdw.png',
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1773211974/Member_Workout_tvz9rp.png',
+        ],
+        links: [
+            { label: 'GitHub', url: 'https://github.com/Ridham2808/Atlyss', type: 'github' },
+            { label: 'Live Site', url: 'https://atlyss-lilac.vercel.app', type: 'live' },
+            { label: 'Demo Video', url: 'https://drive.google.com/file/d/1e0tugl-ehMCup6Q4x3GH9Dcj4oDFApqv/view?usp=sharing', type: 'video' },
+            { label: 'Figma', url: 'https://www.figma.com/design/cjEq6Lz3DwnJGAo2M4p2nX/Atlyss?node-id=0-1&t=bQkoqrPH6IoqyiQn-1', type: 'figma' },
+            { label: 'Leaderboard', url: 'https://drive.google.com/file/d/1CQEOzJaj_NEvtQ50lok1fTIo6ZjdxPZT/view?usp=sharing', type: 'Leaderboard' },
+        ],
+        badge: '🏅 OpenPools 4th Place',
+    },
+    {
         id: 'smartreq', title: 'SmartReq AI', category: 'Hackathon',
         tagline: 'AI-Powered Requirement Gathering · Hackathon',
         description: 'An AI-powered platform that streamlines software requirement gathering — converts user inputs into structured, developer-ready requirement documents using generative AI.',
@@ -353,4 +381,5 @@ export const LINK_ICONS = {
     pr: '⤷',
     issue: '◎',
     figma: '◈',
+    Leaderboard: '🏆',
 };
