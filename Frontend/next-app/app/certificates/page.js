@@ -31,6 +31,20 @@ const CERTS = {
             ],
         },
         {
+            title: 'doppelganger(OpenPools)',
+            issuer: 'Hackathon',
+            year: '2026',
+            desc: 'Secured 4th place at the OpenPools Doppelganger 30-Hour Hackathon. Awarded a certificate for engineering Atlyss — an AI-powered smart gym management and real-time coaching platform.',
+            tags: ['React', 'Node.js', 'PostgreSQL', 'Prisma', 'Tailwind CSS'],
+            certUrl: driveView('1CaDjKETaChurUsaeU6iSGMr8ZaqNaG6h'),
+            img: driveThumb('1CaDjKETaChurUsaeU6iSGMr8ZaqNaG6h'),
+            links: [
+                { label: 'Certificate', icon: Award, url: driveView('1CaDjKETaChurUsaeU6iSGMr8ZaqNaG6h') },
+                { label: 'GitHub', icon: Github, url: 'https://github.com/Ridham2808/Atlyss' },
+                { label: 'Leaderboard', icon: Trophy, url: driveView('1CQEOzJaj_NEvtQ50lok1fTIo6ZjdxPZT') },
+            ],
+        },
+        {
             title: "Hackatron (Infotsav'25)",
             issuer: 'Hackathon',
             year: '2025',
