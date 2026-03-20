@@ -42,6 +42,22 @@ export const PROJECTS = [
         ],
     },
     {
+        id: 'CMS-Portal', title: 'Complaint Management System', category: 'Full Stack',
+        tagline: 'Complaint Management System',
+        description: 'A centralized Complaint Management System featuring a multi-role hierarchy, real-time WebSocket notifications, and an interactive analytics dashboard for seamless tracking and resolution of user grievances.',
+        features: ['Multi-role dashboards (Admin, Technician, User)', 'Real-time alerts & status updates via WebSockets', 'Live analytics heatmap & performance tracking ', 'Automated ticket assignment & categorization', 'Modern glassmorphism UI with dynamic charting', 'Containerized cloud deployment on Render '],
+        technologies: ['Java (Servlets & JSP)', 'MySQL (Aiven Cloud)', 'WebSockets', 'Chart.js', 'Apache Maven ', 'Docker'],
+        images: [
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1773986730/cms_admin_sx0uxy.png',
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1773986730/cms_tech_oum1yp.png',
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1773986731/cms_User_mhbkvg.png',
+        ],
+        links: [
+            { label: 'GitHub', url: 'https://github.com/Ridham2808/CMS-Portal', type: 'github' },
+            { label: 'Live Site', url: 'https://cms-portal-8jiy.onrender.com', type: 'live' },
+        ],
+    },
+    {
         id: 'youtube-clone', title: 'YouTube Clone', category: 'Full Stack',
         tagline: 'Video Platform Clone',
         description: 'A YouTube-inspired platform with search, video filtering by categories, playback with suggestions and sidebar navigation — built with MERN stack.',
