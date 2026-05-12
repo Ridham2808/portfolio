@@ -38,7 +38,7 @@ export const PROJECTS = [
         links: [
             { label: 'GitHub', url: 'https://github.com/Ridham2808/Data_explorer', type: 'github' },
             { label: 'Live Site', url: 'https://data-explorer-kn6w.onrender.com/', type: 'live' },
-            { label: 'Demo Video', url: 'https://www.youtube.com/watch?v=Iek5FGbtn', type: 'video' },
+            { label: 'Demo Video', url: 'https://youtu.be/Iek5FGbtn8U?si=w30QDInF_oxr2i8U', type: 'video' },
         ],
     },
     {
