@@ -26,7 +26,7 @@ A premium personal portfolio built with **Next.js 16**, featuring a dark glassmo
 
 | Link | Description |
 |---|---|
-| [ridham-patel.vercel.app](https://ridham-patel.vercel.app) | ✅ **New Portfolio** (Current) |
+| [ridhampatel.me](https://ridhampatel.me) | ✅ **New Portfolio** (Current) |
 | [portfolio-77ct.onrender.com](https://portfolio-77ct.onrender.com/) | 🔁 Old portfolio — auto-redirects to new |
 
 ---

@@ -114,6 +114,29 @@ export const PROJECTS = [
         badge: '🏆 Indradhanu 2026',
     },
     {
+        id: 'transitops', title: 'TransitOps', category: 'Hackathon',
+        tagline: 'Smart Transport Operations Platform · Fleet Management System',
+        description: 'A centralized fleet and transport operations platform that streamlines vehicle, driver, trip, maintenance, and expense management with automated business rules, role-based access control, and real-time operational analytics.',
+        features: [
+        'Role-Based Authentication (Fleet Manager, Driver, Safety Officer & Financial Analyst)',
+        'Vehicle & Driver Management with automated status transitions',
+        'Smart Trip Dispatch with business rule validations',
+        'Maintenance workflow with automatic vehicle availability control',
+        'Fuel, expense tracking and operational cost analytics'
+    ],
+        technologies: ['React.js','Node.js','Chart.js','Axios'],
+        images: [
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1785993828/Odoo-1_xhhlmb.png',
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1785993828/Odoo-2_wnoraq.png',
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1785993829/Odoo-3_tamnhl.png',
+        ],
+        links: [
+            { label: 'GitHub', url: 'https://github.com/Ridham2808/Odoo_TransitOps', type: 'github' },
+            { label: 'Demo Video', url: 'https://drive.google.com/file/d/1UiRxNjTvdEbGkxCXICbJa0_iESadTTaq/view?usp=sharing', type: 'video' },
+        ],
+        badge: 'Odoo Hackathon 2026',
+    },
+    {
         id: 'traveloop', title: 'Traveloop', category: 'Hackathon',
         tagline: 'Personalized Travel Planning Made Easy · Odoo × Parul University Hackathon',
         description: 'A next-generation, full-stack travel planning platform built in 8 hours at the Odoo × Parul University Hackathon. Traveloop replaces scattered browser tabs and manual spreadsheets with a single intelligent solution — letting users dream, design, organize, and share multi-city itineraries with budget tracking, packing checklists, trip notes, a public share system, and a community social feed.',
