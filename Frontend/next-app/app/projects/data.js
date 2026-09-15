@@ -114,6 +114,32 @@ export const PROJECTS = [
         badge: '🏆 Indradhanu 2026',
     },
     {
+        id: 'DealFlow360', title: 'DealFlow360', category: 'Hackathon',
+        tagline: 'Intelligent, Self-Governing Sales Operations Platform',
+        description: 'DealFlow360 is an enterprise-grade Sales Operations and Quote-to-Cash (QTC) engine built for complex B2B sales environments. It replaces fragmented spreadsheets, manual approvals, and disconnected inventory tools with an autonomous, self-governing sales execution platform.',
+        features: [
+    'Advanced Quotation Builder with Hardware, Services, Warranties & Subscriptions',
+    'Dynamic Pricing, Tier-Based Margins, Tax Calculation & Smart Upsell Suggestions',
+    'Multi-Tier Approval Governance with Sequential Routing & Audit Trails',
+    'Customer RFQ Portal with Catalog Search & One-Click Quote Generation',
+    'Multi-Warehouse Inventory Allocation with Split Shipments & Backorder Management',
+    'Hybrid Invoicing with One-Time Billing, Recurring Subscriptions & Payment Reconciliation',
+    'Secure Customer Portal with Counter-Offers & Automatic Re-Approval Workflow',
+    'Deal Health Monitoring with Stalled Quote, Discount, Delivery & Invoice Anomaly Detection'
+],
+        technologies: ['Next.js',' Vanilla CSS & Tailwind CSS', 'Node.js' ,'Chart.js','Axios',' PostgreSQL 15+'],
+        images: [
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1789467339/Dealflow-home_rwdxzz.png',
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1789467339/Dealflow-quatation_vndgde.png',
+            'https://res.cloudinary.com/dlqyrgblr/image/upload/v1789467340/Dealflow-pipeline_axdnqr.png',
+        ],
+        links: [
+            { label: 'GitHub', url: 'https://github.com/Ridham2808/DealFlow360', type: 'github' },
+            { label: 'Demo Video', url: 'https://drive.google.com/file/d/1d40rEi40vXinoU3fu8xl5YK2ltshdgWX/view?usp=sharing', type: 'video' },
+        ],
+        badge: 'Odoo Hackathon Finale 2026',
+    },
+    {
         id: 'transitops', title: 'TransitOps', category: 'Hackathon',
         tagline: 'Smart Transport Operations Platform · Fleet Management System',
         description: 'A centralized fleet and transport operations platform that streamlines vehicle, driver, trip, maintenance, and expense management with automated business rules, role-based access control, and real-time operational analytics.',
